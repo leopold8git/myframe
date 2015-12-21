@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+	
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/tx 
+     	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+     	http://www.springframework.org/schema/aop 
+    	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+        <!--将scope设为request，即可在这里使用request、session -->
+ 	<bean id="viewAllBrands" class="x.y.page.entity.QueryPage" scope="request">
+ 		<property name="qns" value="品牌查询"></property>
+ 	   <property name="formJson" value="query.htm?pc=test"></property>
+ 	    <property name="elements">
+ 	    	<list>
+ 	    		<bean class="x.y.page.entity.Label">
+ 	    			<property name="content" value="品牌ID"></property>
+ 	    		</bean>
+ 	    		<bean class="x.y.page.entity.Input">
+ 	    			<property name="id" value="brandId"></property>
+ 	    			<property name="name" value="query.brandId"></property>
+ 	    		</bean>
+ 	    		<bean class="x.y.page.entity.Input">
+ 	    			<property name="type" value="button"></property>
+ 	    			<property name="attr" value="value=&quot;查询&quot; onclick=&quot;query();&quot; class=&quot;btn&quot;"></property>
+ 	    		</bean>
+ 	    		<bean class="x.y.page.entity.Input">
+ 	    			<property name="type" value="button"></property>
+ 	    			<property name="value" value="导出"></property>
+ 	    			<property name="onclick" value="exportExcel()"></property>
+ 	    			<property name="className" value="btn"></property>
+ 	    		</bean>
+ 	    	</list>
+ 	    </property>
+ 	    <property name="bottomElements">
+ 	    	<list>
+ 	    		<bean class="x.y.page.entity.Input">
+ 	    			<property name="type" value="button"></property>
+ 	    			<property name="attr" value="value=&quot;新增&quot; onclick=&quot;add();&quot; class=&quot;bt_add&quot;"></property>
+ 	    		</bean>
+ 	    	</list>
+ 	    </property>
+  		<property name="js">
+  		<value>
+	  		<![CDATA[
+	  			$(function(){
+					query();
+				});
+				function editstr(brandId){
+					return createA('编辑','javascript:edit('+brandId+');')
+				}
+				
+				function edit(brandId){
+					$.dialog.open('editBrand.htm',{
+						width : 400,
+						height : 300,
+						padding: 10,
+						ok : function(){this.iframe.contentWindow.save(brandId,this);return false;},
+						cancel : function(){}
+					});
+				}
+				
+				function exportExcel(){
+					$.ajaxcore.exportExcel("excel.htm?pc=excel");
+				}
+					
+	  		]]>
+	  		</value>
+  		</property>
+  		<property name="headers" value="品牌ID|商家ID|品牌名称|操作"></property>
+  		<property name="tds">
+  			<list>
+  			  <bean class="x.y.page.entity.TD">
+  			  	<property name="fld" value="brandId"></property>
+  			  	<property name="attr" value="nowrap"></property>
+  			  </bean>
+  			   <bean class="x.y.page.entity.TD">
+  			  	<property name="fld" value="sellerId"></property>
+  			  </bean>
+  			   <bean class="x.y.page.entity.TD">
+  			  	<property name="fld" value="brandName"></property>
+  			  </bean>
+  			  <bean class="x.y.page.entity.TD">
+  			  	<property name="fld" value="editstr(brandId)"></property>
+  			  </bean>
+  			</list>
+  		</property>
+ 	</bean>
+ 	
+ 	<bean id="editBrand" class="x.y.page.entity.EditPage" scope="request">
+ 	   <property name="formJson" value="update.htm?pc=pc_editBrand"></property>
+ 	   <property name="js">
+  		<value>
+	  		<![CDATA[
+	  			function save(brandId,dia){
+	  				$.ajaxcore.getFrm($("#frm").get(0),{"key.brandId":brandId},function(data){
+	  					if(data.row>0){
+	  					    $.dialog.tips(data.msg,'success',200);
+	  						parent.query();
+	  						//dia.close();
+	  					}else{
+	  						$.dialog.tips(data.msg,'error',2);
+	  					}
+	  					
+	  				});
+	  			}
+	  		]]>
+	  		</value>
+  		</property>
+ 	    <property name="elements">
+ 	    	<list>
+ 	    		<bean class="x.y.page.entity.Text">
+ 	    			<property name="content" value="品牌名称："></property>
+ 	    		</bean>
+ 	    		<bean class="x.y.page.entity.Input">
+ 	    			<property name="id" value="brandName"></property>
+ 	    			<property name="name" value="module.brandName"></property>
+ 	    			<property name="attr" value="class=&quot;input_text&quot;"></property>
+ 	    		</bean>
+ 	    		
+ 	    		<!-- <bean class="x.y.page.entity.Text">
+ 	    			<property name="content" value="备注："></property>
+ 	    		</bean>
+ 	    		<bean class="x.y.page.entity.TextArea">
+ 	    			<property name="id" value="remark"></property>
+ 	    			<property name="name" value="module.remark"></property>
+ 	    		</bean>
+ 	    		<bean class="x.y.page.entity.Text">
+ 	    			<property name="content" value="性别："></property>
+ 	    		</bean>
+ 	    		<bean class="x.y.page.entity.Select">
+ 	    			<property name="id" value="sex"></property>
+ 	    			<property name="name" value="module.sex"></property>
+ 	    			<property name="optionList">
+ 	    				<list>
+	 	    				 <bean class="x.y.page.entity.Option">
+					 	 	    	<property name="name" value="男"></property>
+					 	 	    	<property name="value" value="0"></property>
+	 	    				 </bean>
+	 	    				  <bean class="x.y.page.entity.Option">
+					 	 	    	<property name="name" value="女"></property>
+					 	 	    	<property name="value" value="1"></property>
+	 	    				 </bean>
+ 	    				</list>
+ 	    			</property>
+ 	    		</bean> -->
+ 	    	</list>
+ 	    </property>
+ 	</bean>
+ 	
+</beans>

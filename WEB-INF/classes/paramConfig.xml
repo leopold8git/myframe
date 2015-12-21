@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+	
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/tx 
+     	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+     	http://www.springframework.org/schema/aop 
+    	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+        <!--将scope设为request，即可在这里使用request、session -->
+ 	<bean id="test" class="x.y.entity.ParamConfig" scope="request">
+  		<property name="configMap">
+  			<map>
+                <entry key="sql" value="select * from BrandSeller" />
+               <!--  <entry key="order" value="order by brandName asc" /> -->
+                <entry key="subSql" value="select brandName from PhoneBrand where brandId={brandId}"/>
+                <!--可以取到界面传来的test=123哦  -->
+              <!--   <entry key="cptest" value="#{request.getParameter('test')}" /> -->
+            	
+            </map>
+  		</property>
+  		<!-- <property name="result" >
+  			<bean class="x.y.entity.Result" scope="prototype"> 
+  				<property name="method" value="update"></property>
+  				<property name="merge" value="true"></property>
+  				spel handle
+  				<property name="res" value="'up'"></property>
+  			</bean>
+  		</property> -->
+ 	 </bean>
+ 	 
+ 	 <bean id="up" class="x.y.entity.ParamConfig" scope="request">
+  		<property name="configMap">
+  			<map>
+                <entry key="tableName" value="PhoneBrand"/>
+                <entry key="key.brandId" value="11"/>
+                <entry key="module.brandName" value="苹果手机"/>
+            </map>
+  		</property>
+ 	 </bean>
+ 	 
+ 	 <bean id="querySingle" class="x.y.entity.ParamConfig" scope="request">
+  		<property name="configMap">
+  			<map>
+                <entry key="sql" value="select count(*) sumCount from BrandSeller"/>
+                <entry key="resultType" value="single"/>
+            </map>
+  		</property>
+ 	 </bean>
+ 	 
+ 	 
+ 	 <bean id="pc_editBrand" class="x.y.entity.ParamConfig" scope="request">
+  		<property name="configMap">
+  			<map>
+                <entry key="tableName" value="PhoneBrand" />
+            </map>
+  		</property>
+ 	 </bean>
+ 	 <bean id="excel" class="x.y.entity.ParamConfig" scope="request">
+  		<property name="configMap">
+  			<map>
+                <entry key="sql" value="select * from PhoneBrand" />
+                <entry key="header" value="手机品牌列表" />
+                <entry key="title" value="品牌ID|品牌名称" />
+                <entry key="format" value="string|string" />
+                <entry key="column" value="brandId|brandName" />
+            </map>
+  		</property>
+ 	 </bean>
+ 	 
+</beans>

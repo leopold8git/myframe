@@ -1,0 +1,37 @@
+*{padding:0px; margin:0px;}
+body{text-align:center; font-size:12px;background:left top repeat-x;background-color:#0664bc;font-family:Arial,Helvetica,sans-serif;color:#003e7c;}
+A{color:#003e7c;text-decoration:none;}
+A:hover{color:#fff}
+li{list-style:none;}
+img{border:0; vertical-align:middle;}
+.clear{clear:both;}
+.space{height:5px;font-size:0px;}
+.container,.header,.footer{margin:0 auto;min-width:960px;}
+
+/*Container*/
+.container{width:960px;}
+.loginBody{min-height:600px; background:url(../images/login/b_login_bg.jpg) top center repeat-x;} 
+
+.loginBody .container{min-height:400px; text-align:center;}
+.loginBody .login_box{height:585px;}
+
+.login_box {background:url(../images/login/b_login_body.jpg) no-repeat;}
+
+.login_box .login_logo{ background:url(../images/login/login_logo.png) center center no-repeat; display:inline-block; width:379px; height:154px; float:left; padding-top:250px; margin:0px 20px;}
+
+.login_box .line{background:url(../images/login/login_line.png) center center no-repeat; display:inline-block; width:2px; height:419px; float:left; margin:0px 20px;}
+.login_box .login_form{ float:left; padding-left:500px;padding-top:255px; margin:0px 20px;}
+
+.login_box  .error_txt{width:111px;height:22px;line-height:22px;background:url(../images/login/error_txt.png) top center no-repeat; color:#fff; padding-left:10px; text-align:center; float:left; margin-top:10px;}
+.login_box ul{ text-align:left;}
+.login_box li{height:40px;line-height:40px;vertical-align:middle;padding-left:32px;}
+.login_box li label{width:55px;display:inline-block; color:#444; float:left;}
+.login_box input,.login_box img{ float:left;margin-top:10px;}
+.login_box img{ margin-left:5px;}
+.login_box .username{background:url(../images/login/icon_login.png) left 10px no-repeat;}
+.login_box .password{background:url(../images/login/icon_login.png) left -28px no-repeat;}
+.login_box .vcode{background:url(../images/login/icon_login.png) left -65px no-repeat;}
+.login_box .text{width:110px;height:22px;line-height:22px;padding:0 5px;border:1px solid #BFCFD8;color:black; font-size:12px;}
+.login_box .ctext{width:50px;height:22px;line-height:22px;padding:0 5px;border:1px solid #BFCFD8;color:black; font-size:12px;}
+.login_box .opert{ padding-left:85px; font-size:12px;}
+.login_box .submit{width:80px;height:29px;background:url(../images/login/button.png) center center no-repeat; border:0px; cursor:pointer; vertical-align:middle; color:#fff; font-weight:bold;}

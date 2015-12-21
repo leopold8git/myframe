@@ -1,0 +1,162 @@
+body {
+	font-size: 9pt;
+	font-family: Arial, Helvetica, sans-serif;
+	margin-top: 5px;
+}
+
+td {
+	padding-left: 4px;
+	padding-top: 0px;
+	line-height: 18px;
+	font-size: 9pt;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.Page_Topic_Font {
+	font-size: 9pt;
+	color: #FFFFFF;
+	font-weight: bolder;
+}
+
+.None {
+	padding-left: 0px;
+}
+
+.TD_T {
+	background-image: url(../images/BG_T_TD.gif);
+	font-size: 9pt;
+	color: #FFFFFF;
+	font-weight: bolder;
+}
+
+.Table_BG_T {
+	background-color: #4E89C8;
+}
+
+.D_TR_Topic {
+	background-color: #50A5FB;
+	color: #FFFFFF;
+}
+
+.D_TR_Style_1 {
+	background-color: #ECF6FF;;
+	cursor: hand
+}
+
+.D_TR_Style_2 {
+	background-color: #E5F3FF;;
+	cursor: hand
+}
+
+.D_TR_Style_Over {
+	background-color: #FFE4C4;;
+	cursor: hand
+}
+
+.D_TR_Style_Select {
+	background-color: #5F9EA0;;
+	cursor: hand
+}
+
+.D_TD_Align_Right {
+	padding-right: 5px;
+	text-align: right;
+}
+
+.sbttn {
+	border-left: 1px solid #FBFBFB;
+	border-top: 2px solid #FBFBFB;
+	border-right: 2px solid #71A6DC;
+	border-bottom: 1px solid #71A6DC;
+	background-color: #CBDCEF;
+	cursor: hand;
+	height: 18px;
+	font-size: 9pt;
+	color: #013a92
+}
+
+.sbttn1 {
+	display: none
+}
+
+.SmallTextInput_1 {
+	width: 100%;
+	height: 18px;
+	border: 0px;
+	border-bottom: 1px dashed Gray;
+	background-color: #E1E1E1;
+}
+
+.SmallTextInput_2 {
+	width: 100%;
+	height: 18px;
+	border: 0px;
+	border-bottom: 1px dashed Gray;
+	background-color: #EAEAEA;
+}
+
+.MiddleSize_1 {
+	width: 120px;
+}
+
+.LongSize_1 {
+	width: 200px;
+}
+
+.LongSize_2 {
+	width: 400px;
+}
+
+.input {
+	height: 18px;
+}
+
+.D_L_Width_1 {
+	width: 170px;
+}
+
+.D_L_Width_2 {
+	width: 180px;
+}
+
+.Com_Button {
+	width: 90px;
+	font-size: 9pt;
+}
+
+.D_T_Color {
+	color: #FFFFFF;
+}
+
+.D_T_Color_2 {
+	color: #993333;
+}
+
+.D_T_SP_Tr {
+	background-color: #4D759E;
+	color: #FFFFFF;
+}
+
+.D_T_SP_Color_1 {
+	color: Yellow;
+}
+
+.D_T_SP_Color_2 {
+	color: #0057AA;
+}
+
+.D_T_SP_Color_3 {
+	color: #993333;
+}
+
+.BT_Style {
+	border-top: 1px solid #0054BA;
+	border-bottom: 1px solid #0054BA;
+	border-right: 1px solid #0054BA;
+	background-image: url(../images/BT_Icon_BG.gif);
+	padding-left: 12px;
+	font-weight: bolder;
+	color: #0054BA;
+	font-size: 11pt;
+	letter-spacing: 2px;
+}

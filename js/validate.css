@@ -1,0 +1,11 @@
+/*表单验证*/
+.validatTips_failure { position:absolute;padding-top:  ;  z-index:999;}
+.validatTips_failure .t_arrow{ position:absolute;z-index: 1002; top:-5px; ; left:8px; width:9px; height:7px; background:url(../../images/icon/tiparrow-yellow-top.png) no-repeat center center; }
+.validatTips_failure .t_cont{position:relative;z-index: 1001; background:#fcf2d1 ; color:#2e2e2e; padding:4px 5px; border:1px solid #ddba47; border-radius: 2px;box-shadow: 1px 1px 2px #777;}
+.validatTips_success{ display:none!important;width:20px; height:20px; position:absolute; z-index:1000;  background: url(../../images/icon/validate_true.png) no-repeat center center; }
+.validatTips_focusInfo {}
+.validatTips_focusInfo .t_cont{/*background:#fff;border-color:#eee*/}
+.validatTips_focusInfo .t_arrow{/*background-image:url(../images/icons/tiparrow-white-left.png)*/}
+
+input.input_validation_failed,.input_validation_failed {border:1px solid #EB3A3A!important; background-color: #FCDDDC !important; top:20px; }
+select.input_validation_failed{border:1px solid red!important;} 

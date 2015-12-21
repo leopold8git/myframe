@@ -1,0 +1,5 @@
+.hide{
+	display : none;
+}
+.file{ position:relative; filter:alpha(opacity:0);opacity: 0;width: 100px; height: 32px;left:-100px;margin-top:5px;cursor:pointer;}
+.a2 {width: 100px; height: 32px; border: 1px solid #cccccc; border-radius: 5px; font-size: 16px; text-align: center; line-height: 32px; color: #000000; margin-top: 5px;display:inline-block; }

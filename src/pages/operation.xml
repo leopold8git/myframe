@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+	
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/tx 
+     	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+     	http://www.springframework.org/schema/aop 
+    	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+    
+ 	<!--操作信息  -->
+ 	<bean id="viewAllOperations" class="x.y.page.entity.QueryPage" scope="request">
+ 		<property name="qns" value="操作查询"></property>
+ 	   <property name="formJson" value="query.htm?pc=queryOperations"></property>
+ 	    <property name="elements">
+ 	    	<list>
+ 	    		<bean class="x.y.page.entity.Label">
+ 	    			<property name="content" value="操作Id"></property>
+ 	    		</bean>
+ 	    		<bean class="x.y.page.entity.Input">
+ 	    			<property name="id" value="operationId"></property>
+ 	    			<property name="name" value="query.operationId"></property>
+ 	    		</bean>
+ 	    		<bean class="x.y.page.entity.Label">
+ 	    			<property name="content" value="操作名称"></property>
+ 	    		</bean>
+ 	    		<bean class="x.y.page.entity.Input">
+ 	    			<property name="id" value="operationName"></property>
+ 	    			<property name="name" value="query.operationName.like"></property>
+ 	    		</bean>
+ 	    		<bean class="x.y.page.entity.Input">
+ 	    			<property name="type" value="button"></property>
+ 	    			<property name="attr" value="value=&quot;查询&quot; onclick=&quot;query();&quot; class=&quot;btn&quot;"></property>
+ 	    		</bean>
+ 	    	</list>
+ 	    </property>
+ 	    <property name="bottomElements">
+ 	    	<list>
+ 	    		<bean class="x.y.page.entity.Input">
+ 	    			<property name="type" value="button"></property>
+ 	    			<property name="attr" value="value=&quot;新增&quot; onclick=&quot;add();&quot; class=&quot;bt_add&quot;"></property>
+ 	    		</bean>
+ 	    	</list>
+ 	    </property>
+  		<property name="js">
+  		<value>
+	  		<![CDATA[
+	  			$(function(){
+					query();
+				});
+				
+				function opt(operationId){
+					return editstr(operationId)+" | "+delstr(operationId);
+				}
+				function editstr(operationId){
+					return createA('编辑','javascript:edit('+operationId+');')
+				}
+				function delstr(operationId){
+					return createA('删除','javascript:del('+operationId+');')
+				}
+				
+				function del(operationId){
+					$.get('delete.htm?pc=pc_delOperation',{'key.operationId':operationId},function(data){
+						if(data.row>0){
+	  					    $.dialog.tips(data.msg,'success',1);
+	  						query();
+	  					}else{
+	  						$.dialog.tips(data.msg,'error',2);
+	  					}
+					});
+				}
+				function edit(operationId){
+				
+						$.dialog.open('editOperation.htm?operationId='+operationId,{
+							width : 400,
+							height : 300,
+							padding: 10,
+							ok : function(frame){frame.save(operationId,this);return false;},
+							cancel : function(){}
+						});
+					
+				}
+				
+				function add(){
+					$.dialog.open('addOperation.htm',{
+						width : 400,
+						height : 300,
+						padding: 10,
+						ok : function(frame){frame.save(this);return false;},
+						cancel : function(){}
+					});
+				}
+	  		]]>
+	  		</value>
+  		</property>
+  		<property name="headers" value="操作编号|操作名称|操作"></property>
+  		<property name="tds">
+  			<list>
+  			  <bean class="x.y.page.entity.TD">
+  			  	<property name="fld" value="operationId"></property>
+  			  </bean>
+  			   <bean class="x.y.page.entity.TD">
+  			  	<property name="fld" value="operationName"></property>
+  			  </bean>
+  			  <bean class="x.y.page.entity.TD">
+  			  	<property name="fld" value="opt(operationId)"></property>
+  			  </bean>
+  			</list>
+  		</property>
+ 	</bean>
+ 	
+ 	<bean id="editOperation" class="x.y.page.entity.EditPage" scope="request">
+ 	   <property name="formJson" value="update.htm?pc=pc_editOperation"></property>
+ 	   <property name="js">
+  		<value>
+	  		<![CDATA[
+	  		
+	  		$(function(){
+	  			$.ajaxcore.fillFrm($("#frm").get(0),"query.htm?pc=queryOperations",{"query.operationId":#{request.getParameter('operationId')}});
+	  		});
+	  		
+	  			function save(operationId,dia){
+	  				$.ajaxcore.getFrm($("#frm").get(0),{"key.operationId":operationId},function(data){
+	  					if(data.row>0){
+	  					    $.dialog.tips(data.msg,'success',200);
+	  						parent.query();
+	  						dia.close();
+	  					}else{
+	  						$.dialog.tips(data.msg,'error',2);
+	  					}
+	  					
+	  				});
+	  			}
+	  		]]>
+	  		</value>
+  		</property>
+ 	    <property name="elements">
+ 	    	<list>
+ 	    		<bean class="x.y.page.entity.Text">
+ 	    			<property name="content" value="操作名称："></property>
+ 	    		</bean>
+ 	    		<bean class="x.y.page.entity.Input">
+ 	    			<property name="id" value="operationName"></property>
+ 	    			<property name="name" value="module.operationName"></property>
+ 	    			<property name="fld" value="operationName"></property>
+ 	    			<property name="attr" value="class=&quot;input_text&quot;"></property>
+ 	    		</bean>
+ 	    		
+ 	    	</list>
+ 	    </property>
+ 	</bean>
+ 	<bean id="addOperation" class="x.y.page.entity.EditPage" scope="request">
+ 	   <property name="formJson" value="insert.htm?pc=pc_addOperation"></property>
+ 	   <property name="js">
+  		<value>
+	  		<![CDATA[
+	  			function save(dia){
+	  				$.ajaxcore.getFrm($("#frm").get(0),function(data){
+	  					if(data.row>0){
+	  					    $.dialog.tips(data.msg,'success',200);
+	  						parent.query();
+	  						dia.close();
+	  					}else{
+	  						$.dialog.tips(data.msg,'error',2);
+	  					}
+	  					
+	  				});
+	  			}
+	  		]]>
+	  		</value>
+  		</property>
+ 	    <property name="elements">
+ 	    	<list>
+ 	    		<bean class="x.y.page.entity.Text">
+ 	    			<property name="content" value="操作名称："></property>
+ 	    		</bean>
+ 	    		<bean class="x.y.page.entity.Input">
+ 	    			<property name="id" value="operationName"></property>
+ 	    			<property name="name" value="module.operationName"></property>
+ 	    			<property name="attr" value="class=&quot;input_text&quot;"></property>
+ 	    		</bean>
+ 	    	</list>
+ 	    </property>
+ 	</bean>
+ 	
+ 	<!-- ParamConfig -->
+ 	 <!--操作信息配置  -->
+ 	  <bean id="queryOperations" class="x.y.entity.ParamConfig" scope="request">
+  		<property name="configMap">
+  			<map>
+                <entry key="sql" value="select * from Operation" />
+                <entry key="subSql" value="select IF(count(*)>0,1,0) as selected from resource_operation where operationId={operationId}"/>
+            </map>
+  		</property>
+ 	 </bean>
+ 	 <!-- 操作信息修改 -->
+ 	  <bean id="pc_editOperation" class="x.y.entity.ParamConfig" scope="request">
+  		<property name="configMap">
+  			<map>
+                <entry key="tableName" value="Operation" />
+            </map>
+  		</property>
+ 	 </bean>
+ 	  <!-- 增加操作信息 -->
+ 	  <bean id="pc_addOperation" class="x.y.entity.ParamConfig" scope="request">
+  		<property name="configMap">
+  			<map>
+                <entry key="tableName" value="Operation" />
+                <entry key="module.operationId" value="#{ T(x.y.util.DBUtils).getSerialNo('Operation')+''}" />
+            </map>
+  		</property>
+  		
+ 	 </bean>
+ 	  <!-- 操作信息修改 -->
+ 	  <bean id="pc_delOperation" class="x.y.entity.ParamConfig" scope="request">
+  		<property name="configMap">
+  			<map>
+                <entry key="tableName" value="Operation" />
+            </map>
+  		</property>
+ 	 </bean>
+</beans>

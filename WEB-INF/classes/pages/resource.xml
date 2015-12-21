@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+	
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/tx 
+     	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+     	http://www.springframework.org/schema/aop 
+    	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+    
+ 	<!--资源信息  -->
+ 	<bean id="viewAllResources" class="x.y.page.entity.QueryPage" scope="request">
+ 		<property name="qns" value="资源查询"></property>
+ 	   <property name="formJson" value="query.htm?pc=queryResources"></property>
+ 	    <property name="elements">
+ 	    	<list>
+ 	    		<bean class="x.y.page.entity.Label">
+ 	    			<property name="content" value="资源编号"></property>
+ 	    		</bean>
+ 	    		<bean class="x.y.page.entity.Input">
+ 	    			<property name="id" value="resourceId"></property>
+ 	    			<property name="name" value="query.resourceId"></property>
+ 	    		</bean>
+ 	    		<bean class="x.y.page.entity.Label">
+ 	    			<property name="content" value="资源名称"></property>
+ 	    		</bean>
+ 	    		<bean class="x.y.page.entity.Input">
+ 	    			<property name="id" value="resourceName"></property>
+ 	    			<property name="name" value="query.resourceName.like"></property>
+ 	    		</bean>
+ 	    		<bean class="x.y.page.entity.Input">
+ 	    			<property name="type" value="button"></property>
+ 	    			<property name="attr" value="value=&quot;查询&quot; onclick=&quot;query();&quot; class=&quot;btn&quot;"></property>
+ 	    		</bean>
+ 	    	</list>
+ 	    </property>
+ 	    <property name="bottomElements">
+ 	    	<list>
+ 	    		<bean class="x.y.page.entity.Input">
+ 	    			<property name="type" value="button"></property>
+ 	    			<property name="attr" value="value=&quot;新增&quot; onclick=&quot;add();&quot; class=&quot;bt_add&quot;"></property>
+ 	    		</bean>
+ 	    	</list>
+ 	    </property>
+  		<property name="js">
+  		<value>
+	  		<![CDATA[
+	  			$(function(){
+					query();
+				});
+				
+				function opt(resourceId){
+					return editstr(resourceId)+" | "+delstr(resourceId);
+				}
+				function editstr(resourceId){
+					return createA('编辑','javascript:edit('+resourceId+');')
+				}
+				function delstr(resourceId){
+					return createA('删除','javascript:del('+resourceId+');')
+				}
+				
+				function del(resourceId){
+					$.get('delete.htm?pc=pc_delResource',{'key.resourceId':resourceId},function(data){
+						if(data.row>0){
+	  					    $.dialog.tips(data.msg,'success',1);
+	  						query();
+	  					}else{
+	  						$.dialog.tips(data.msg,'error',2);
+	  					}
+					});
+				}
+				function edit(resourceId){
+				
+						$.dialog.open('editResource.htm?resourceId='+resourceId,{
+							width : 400,
+							height : 300,
+							padding: 10,
+							ok : function(frame){frame.save(resourceId,this);return false;},
+							cancel : function(){}
+						});
+					
+				}
+				
+				function add(){
+					$.dialog.open('addResource.htm',{
+						width : 400,
+						height : 300,
+						padding: 10,
+						ok : function(frame){frame.save(this);return false;},
+						cancel : function(){}
+					});
+				}
+				
+				function setOperation(resourceId){
+					return createA('分配操作','javascript:allocateOperation('+resourceId+');')
+				}
+				
+				function allocateOperation(resourceId){
+					$.dialog.open('setOperations.htm?resourceId='+resourceId,{
+							width : 400,
+							height : 300,
+							padding: 10,
+							ok : function(frame){frame.save(this);return false;},
+							cancel : function(){}
+						});
+				}
+				
+	  		]]>
+	  		</value>
+  		</property>
+  		<property name="headers" value="资源编号|资源名称|链接|分配操作|操作"></property>
+  		<property name="tds">
+  			<list>
+  			  <bean class="x.y.page.entity.TD">
+  			  	<property name="fld" value="resourceId"></property>
+  			  </bean>
+  			   <bean class="x.y.page.entity.TD">
+  			  	<property name="fld" value="resourceName"></property>
+  			  </bean>
+  			   <bean class="x.y.page.entity.TD">
+  			  	<property name="fld" value="resourceLink"></property>
+  			  </bean>
+  			    <bean class="x.y.page.entity.TD">
+  			  	<property name="fld" value="setOperation(resourceId)"></property>
+  			  </bean>
+  			  <bean class="x.y.page.entity.TD">
+  			  	<property name="fld" value="opt(resourceId)"></property>
+  			  </bean>
+  			</list>
+  		</property>
+ 	</bean>
+ 	
+ 	<bean id="editResource" class="x.y.page.entity.EditPage" scope="request">
+ 	   <property name="formJson" value="update.htm?pc=pc_editResource"></property>
+ 	   <property name="js">
+  		<value>
+	  		<![CDATA[
+	  		
+	  		$(function(){
+	  			$.ajaxcore.fillFrm($("#frm").get(0),"query.htm?pc=queryResources",{"query.resourceId":#{request.getParameter('resourceId')}});
+	  		});
+	  		
+	  			function save(resourceId,dia){
+	  				$.ajaxcore.getFrm($("#frm").get(0),{"key.resourceId":resourceId},function(data){
+	  					if(data.row>0){
+	  					    $.dialog.tips(data.msg,'success',200);
+	  						parent.query();
+	  						dia.close();
+	  					}else{
+	  						$.dialog.tips(data.msg,'error',2);
+	  					}
+	  					
+	  				});
+	  			}
+	  		]]>
+	  		</value>
+  		</property>
+ 	    <property name="elements">
+ 	    	<list>
+ 	    		<bean class="x.y.page.entity.Text">
+ 	    			<property name="content" value="资源名称："></property>
+ 	    		</bean>
+ 	    		<bean class="x.y.page.entity.Input">
+ 	    			<property name="id" value="resourceName"></property>
+ 	    			<property name="name" value="module.resourceName"></property>
+ 	    			<property name="fld" value="resourceName"></property>
+ 	    			<property name="attr" value="class=&quot;input_text&quot;"></property>
+ 	    		</bean>
+ 	    		<bean class="x.y.page.entity.Text">
+ 	    			<property name="content" value="资源链接："></property>
+ 	    		</bean>
+ 	    		<bean class="x.y.page.entity.Input">
+ 	    			<property name="id" value="resourceLink"></property>
+ 	    			<property name="name" value="module.resourceLink"></property>
+ 	    			<property name="fld" value="resourceLink"></property>
+ 	    			<property name="attr" value="class=&quot;input_text&quot;"></property>
+ 	    		</bean>
+ 	    	</list>
+ 	    </property>
+ 	</bean>
+ 	<bean id="addResource" class="x.y.page.entity.EditPage" scope="request">
+ 	   <property name="formJson" value="insert.htm?pc=pc_addResource"></property>
+ 	   <property name="js">
+  		<value>
+	  		<![CDATA[
+	  			function save(dia){
+	  				$.ajaxcore.getFrm($("#frm").get(0),function(data){
+	  					if(data.row>0){
+	  					    $.dialog.tips(data.msg,'success',200);
+	  						parent.query();
+	  						dia.close();
+	  					}else{
+	  						$.dialog.tips(data.msg,'error',2);
+	  					}
+	  					
+	  				});
+	  			}
+	  		]]>
+	  		</value>
+  		</property>
+ 	    <property name="elements">
+ 	    	<list>
+ 	    		<bean class="x.y.page.entity.Text">
+ 	    			<property name="content" value="资源名称："></property>
+ 	    		</bean>
+ 	    		<bean class="x.y.page.entity.Input">
+ 	    			<property name="id" value="resourceName"></property>
+ 	    			<property name="name" value="module.resourceName"></property>
+ 	    			<property name="attr" value="class=&quot;input_text&quot;"></property>
+ 	    		</bean>
+ 	    		<bean class="x.y.page.entity.Text">
+ 	    			<property name="content" value="资源链接："></property>
+ 	    		</bean>
+ 	    		<bean class="x.y.page.entity.Input">
+ 	    			<property name="id" value="resourceLink"></property>
+ 	    			<property name="name" value="module.resourceLink"></property>
+ 	    			<property name="attr" value="class=&quot;input_text&quot;"></property>
+ 	    		</bean>
+ 	    	</list>
+ 	    </property>
+ 	</bean>
+ 	
+ 	<!-- ParamConfig -->
+ 	 <!--资源信息配置  -->
+ 	  <bean id="queryResources" class="x.y.entity.ParamConfig" scope="request">
+  		<property name="configMap">
+  			<map>
+                <entry key="sql" value="select * from Resource" />
+            </map>
+  		</property>
+ 	 </bean>
+ 	 <!-- 资源信息修改 -->
+ 	  <bean id="pc_editResource" class="x.y.entity.ParamConfig" scope="request">
+  		<property name="configMap">
+  			<map>
+                <entry key="tableName" value="Resource" />
+            </map>
+  		</property>
+ 	 </bean>
+ 	  <!-- 增加资源信息 -->
+ 	  <bean id="pc_addResource" class="x.y.entity.ParamConfig" scope="request">
+  		<property name="configMap">
+  			<map>
+                <entry key="tableName" value="Resource" />
+                <entry key="module.resourceId" value="#{ T(x.y.util.DBUtils).getSerialNo('Resource')+''}" />
+            </map>
+  		</property>
+  		
+ 	 </bean>
+ 	  <!-- 资源信息修改 -->
+ 	  <bean id="pc_delResource" class="x.y.entity.ParamConfig" scope="request">
+  		<property name="configMap">
+  			<map>
+                <entry key="tableName" value="Resource" />
+            </map>
+  		</property>
+ 	 </bean>
+</beans>

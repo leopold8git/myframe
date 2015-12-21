@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+	
+<project name="myframe" default="start_tomcat" basedir=".">
+	<property  name ="TOMCAT_HOME" value ="E:/软件/tomcat/apache-tomcat-6.0.35"/>
+    <property  name ="warDir" value ="${TOMCAT_HOME}/webapps"/>
+	<property  name ="srcDir" value ="${basedir}/src"/>
+	<property  name ="WebContent" value ="${basedir}"/>
+	<property  name ="warName" value ="myframe.war"/>
+	<property  name ="classes" value ="${basedir}/WEB-INF/classes"/>
+    <property  name ="lib" value ="${basedir}/WEB-INF/lib"/>
+	<property name="tomcat.lib" value="${TOMCAT_HOME}/lib" />
+	<property name="tomcat.logFile" value="${TOMCAT_HOME}/log.txt" />
+	<path id="master-classpath">
+			<fileset dir="${lib}">
+				<include name="*.jar" />
+			</fileset>
+		<fileset dir="${tomcat.lib}">
+			<include name="*.jar" />
+		</fileset>	
+	</path>
+		<target name="stop_tomcat">
+				<echo>停止tomcat</echo>
+				<exec executable="cmd" dir="${TOMCAT_HOME}/bin" failonerror="false" 
+							output="${tomcat.logFile}" append="true" >
+					<env key="CATALINA_HOME" path="${TOMCAT_HOME}"/>
+					<arg value="/c shutdown.bat" />   
+				</exec>
+		</target>
+    	<target name ="clean" depends ="stop_tomcat">
+        	<delete dir ="${classes}"/>
+    		<delete dir="${warDir}/${warName}"/> 
+    	</target>
+	  <target name ="compile"  depends ="clean">
+	        <mkdir dir ="${classes}"/>	  	
+	        <javac srcdir ="${srcDir}"  destdir ="${classes}" includeantruntime="on" >
+				<classpath refid="master-classpath" />
+	        	<compilerarg line="-encoding utf-8" />
+	        </javac>	
+	   </target>
+	<target name="war" depends="compile">
+	  <war destfile="${warDir}/${warName}" webxml="${WebContent}/WEB-INF/web.xml">
+	  	<fileset dir="${WebContent}">
+		   		<exclude name="*.classpath"/>
+		   		<exclude name="*.project"/>
+		   		<exclude name="build.xml"/>
+	  			<exclude name=".settings/**"/>
+	  			<exclude name="src/**"/>
+		   	</fileset>
+	   <classes dir="${classes}"></classes>
+	  </war>
+	 </target>
+
+	<target name="start_tomcat" depends="war">
+		<echo>启动tomcat</echo>
+		<exec executable="cmd" dir="${TOMCAT_HOME}/bin"  failonerror="false" 
+					output="${tomcat.logFile}" append="true" >
+			 <env key="CATALINA_HOME" path="${TOMCAT_HOME}"/>
+			 <arg value="/c startup.bat" />   
+		</exec>
+	</target>
+</project>
+
+

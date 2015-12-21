@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+	
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/tx 
+     	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+     	http://www.springframework.org/schema/aop 
+    	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+    <bean id="setRoles" class="x.y.page.entity.Page" scope="request">
+ 	   <property name="viewName" value="/common/page"></property>
+ 	   <property name="jsLink">
+ 	   		<list>
+ 	   			 <value>resources/editor/one2many0/one2many0.js</value>
+ 	   		</list>
+ 	   </property>
+ 	   <property name="styleLink">
+ 	   		<list>
+ 	   			 <value>resources/editor/one2many0/one2many0.css</value>
+ 	   		</list>
+ 	   </property>
+  		<property name="js">
+  		<value>
+	  		<![CDATA[
+	  		var one2many  ; 
+	  			$(function(){
+	  					var userId = #{request.getParameter('userId')};
+	  				 one2many = $("body").one2many0({url:"query.htm?pc=queryRoles&subquery.userId="+userId,"ths":"角色名称|选择","flds":"roleName|_checkbox"});
+	  			});
+	  			
+	  			function save(dia){
+	  					var userId = #{request.getParameter('userId')};
+	  					var selectedRoleIds = one2many.getQueryParam("roleId");
+	  					//alert(selectedRoleIds)
+	  					
+		  				$.get('delete.htm?pc=pc_setUserRole',{'key.userId':userId,'module1.userId':userId,'module1.roleId':selectedRoleIds},function(data){
+							if(data.row>0){
+		  					    $.dialog.tips(data.msg,'success',1);
+		  					   // dia.close();
+		  					}else{
+		  						$.dialog.tips(data.msg,'error',2);
+		  					}
+						});
+						
+	  				}
+	  		]]>
+	  		</value>
+  		</property>
+ 	</bean>
+ 	
+ 	 <!-- 用户信息修改 -->
+ 	  <bean id="pc_setUserRole" class="x.y.entity.ParamConfig" scope="request">
+  		<property name="configMap">
+  			<map>
+                <entry key="tableName" value="user_role"/>
+            </map>
+  		</property>
+  		<property name="result" >
+  			<bean class="x.y.entity.Result" scope="prototype"> 
+  				<property name="method" value="batchInsert"></property>
+  				<property name="merge" value="false"></property>
+  				<property name="res" value="'pc_addUserRole'"></property>
+  			</bean>
+  		</property>
+ 	 </bean>
+ 	 <bean id="pc_addUserRole" class="x.y.entity.ParamConfig" scope="request">
+  		<property name="configMap">
+  			<map>
+                <entry key="tableName" value="user_role"/>
+                <entry key="prestr" value="module1"/>
+            </map>
+  		</property>
+  		
+ 	 </bean>
+ 	 
+</beans>

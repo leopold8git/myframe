@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="gb2312"?>
+	
+<project name="dc" default="zip" basedir=".">
+		<property  name ="classes" value ="${basedir}/WEB-INF/classes"/>
+	    <property  name ="build" value ="${basedir}/build"/>
+	    <property  name ="lib" value ="${basedir}/WEB-INF/lib"/>
+
+	<path id="master-classpath">
+			<fileset dir="${lib}">
+				<include name="*.jar" />
+			</fileset>
+		<!--
+			<fileset dir="${tomcat.lib}">
+				<include name="*.jar" />
+			</fileset>	
+		-->
+	</path>
+	<!--
+    	<target name ="clean">
+        	<delete dir ="${classes}"/>
+    	</target>
+	  <target name ="compile"  depends ="clean">
+	        <mkdir dir ="${classes}"/>	  	
+	        <javac srcdir ="${basedir}/src"  destdir ="${classes}">
+				<classpath refid="master-classpath" />
+	        	<compilerarg line="-encoding utf-8 " />
+	        </javac>	
+	   </target>
+	   -->
+	 <target name ="zip">
+	 	   <delete file ="${build}/leopold.war"/>
+	        <zip destfile ="${build}/leopold.war" >
+	                 <fileset dir ="${basedir}">
+                 		<include name="WEB-INF/classes/**"/>
+	                 	
+	                 	<include name="WEB-INF/lib/*.jar"/>
+	                 	<include name="WEB-INF/web.xml"/>
+	                 	
+	                 	<include name="js/**"/>
+	                 	<include name="jsp/**"/>
+	                 	<include name="resources/**"/>
+	                 	<include name="main.jsp"/>
+	                 	<exclude name="WEB-INF/lib/mysql-connector-java-5.1.7-bin.jar"/>
+	                 </fileset>	
+	        </zip>
+	     </target>
+</project>
+
+

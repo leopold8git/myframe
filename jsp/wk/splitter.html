@@ -1,0 +1,31 @@
+<html>
+<head>
+<title></title>
+<script>
+var leftWidth;
+document.onclick=showhide;
+function showhide()
+{
+	if(parent.frameset)
+	{
+		var cols=parent.frameset.cols;
+		var i=cols.indexOf(",");
+		if(cols.substring(0,i)>0)
+		{
+			leftWidth=cols.substring(0,i);
+			parent.frameset.cols="0" + cols.substring(i);
+			document.body.background="images/in.gif";
+		}
+		else
+		{
+			if(leftWidth<=0) leftWidth=175;
+			parent.frameset.cols=leftWidth + cols.substring(i);
+			document.body.background="images/out.gif";
+		}
+	}
+}
+</script>
+</head>
+<body background="images/out.gif" style="cursor:hand" style="overflow:hidden">
+</body>
+</html>

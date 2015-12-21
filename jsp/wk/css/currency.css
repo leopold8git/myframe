@@ -1,0 +1,182 @@
+Body {
+SCROLLBAR-FACE-COLOR: #E8E8E8; 
+SCROLLBAR-HIGHLIGHT-COLOR: #D8E9F6;
+SCROLLBAR-3DLIGHT-COLOR: White; 
+SCROLLBAR-ARROW-COLOR: Black; 
+SCROLLBAR-TRACK-COLOR: #F4F4F4;
+ SCROLLBAR-DARKSHADOW-COLOR: #E8E8E8;
+ font-family: "宋体";
+ line-height: 12pt; 
+ font-size: 9pt;
+}
+table{  font-family: "宋体";line-height: 12pt; font-size: 9pt}
+p    {  font-family: "宋体";line-height: 12pt; font-size: 9pt}
+A    {  font-family: "宋体";font-size: 9pt;  line-hight: 12pt; text-decoration:none;color:#0000a2}
+A.menuc:link {text-decoration:none; color:#FFFFFF}
+A.menuc:visited {text-decoration:none;color:#FFFFFF}
+A.menuc:active {text-decoration:none; color:#FFFFFF}
+A.menuc:hover {text-decoration:none; color: #AFEEEE; CURSOR:hand}
+
+A.:link {text-decoration:none; color:#0000a2}
+A.:visited {text-decoration:none;color:#0000a2}
+A.:active {text-decoration:none; color:#FF0000}
+A.:hover {text-decoration:none; color: #00EEEE; CURSOR:hand}
+
+A.menu_M:link {text-decoration:none; color:#0000a2}
+A.menu_M:visited {text-decoration:none;color:#0000a2}
+A.menu_M:active {text-decoration:none; color:#FF0000}
+A.menu_M:hover {text-decoration:none; color: #00EEEE; CURSOR:hand}
+.lineheight {line-height: 16pt;letter-spacing: 1.2pt;
+}
+.lineheight_S {line-height: 15pt;letter-spacing: 0pt;
+}
+.smallfontsize {font-size:9pt}
+.whiteTxtBox{
+	background-color : White;
+	border : White;
+}
+.Align_Right{
+	text-align : right;
+	padding-right : 8px;
+}
+.Align_Left{
+	text-align : left;
+	vertical-align : bottom;
+	padding-left: 5px;
+}
+.Align_Left_ForTitle{
+	text-align : left;
+	padding-left: 10px;
+}
+.Align_Left_For_Ch{
+	text-align : left;
+	padding-left: 30px;
+}
+.Align_Left_Middle{
+	text-align : left;
+	padding-left: 20px;
+}
+.Align_Left_Small{
+	text-align : left;
+	padding-left: 5px;
+}
+.ChannelTitle {
+	color : #D68A2A;
+	font-size : 14px;
+	font-weight : bolder;
+}
+.comSize{
+	width:100px;
+	height:18px;
+}
+.Button_1{
+	FONT-WEIGHT: normal; FONT-SIZE: 12px; COLOR: #333333;  BACKGROUND-COLOR: #E8E8E8
+}
+.Button_2{
+	FONT-SIZE: 12px; COLOR: #ffffff;  BACKGROUND-COLOR: #666666
+}
+A.menuA:link {text-decoration:none; color: #3D3D3D;
+}
+A.menuA:visited {text-decoration:none;color: #3D3D3D;
+}
+A.menuA:active {text-decoration:none; color: #3D3D3D;
+}
+A.menuA:hover {text-decoration:none; color: #D68A2A;
+}  
+
+A.menuHui:link {text-decoration:none; color: #424242;
+}
+A.menuHui:visited {text-decoration:none;color: #424242;
+}
+A.menuHui:active {text-decoration:none; color: #424242;
+}
+A.menuHui:hover {text-decoration:none; color: #424242;}
+
+A.menuHui_2:link {
+	text-decoration:none; color: #666666;
+}
+A.menuHui_2:visited {
+	text-decoration:none;color: #666666;
+}
+A.menuHui_2:active {
+	text-decoration:none; color: #666666;
+}
+A.menuHui_2:hover {
+	text-decoration:none; color: #0099D3;
+}
+
+A.menuB_1:link {
+	text-decoration:none; color: #005784;
+}
+A.menuB_1:visited {
+	text-decoration:none;color: #005784;
+}
+A.menuB_1:active {
+	text-decoration:none; color: #005784;
+}
+A.menuB_1:hover {
+	text-decoration: underline; color: #0099D3;
+}
+.TableText_Color_Hui{
+	color: #4C4C4C;
+}
+.NormalNode{
+	cursor:hand;
+	color:#2159C6;
+	font-weight:normal;
+	padding-bottom:2px;
+	padding-left:0px;
+}
+.SelectedNode{
+	cursor:hand;
+	color:#FF0000;
+	font-weight:bolder;
+	padding-bottom:2px;
+	padding-left:0px;
+}
+.TitleTxt_1{
+	color:#626F82;
+	font-weight : bolder;
+}
+.TitleTxt_2{
+	color:#778399;
+}
+.rootmenu {
+	CURSOR: hand; 
+}
+
+.rootmenu DIV {
+	WIDTH:100%;
+}
+
+.sub {
+	BORDER-BOTTOM:  0px solid; BORDER-LEFT:  0px solid; BORDER-RIGHT: 0px solid; DISPLAY: none; PADDING-TOP: 0px
+}
+.scrollButton { }
+.LeftMenu_Left_P {
+	padding-left:8px;
+}
+
+.LeftMenu_Left_C {
+	padding-left:30px;
+	vertical-align : bottom;
+}
+.LeftMenu_Left_S {
+	padding-left:40px;
+	vertical-align : bottom;
+}
+
+.MenuTitle_1{ 
+	color:#000000;
+	font-size:9pt;
+}
+.MenuTitle_2{ 
+	color:#333333;
+	font-size:9pt;
+}
+.Top_Space {
+	padding-top:3px;
+}
+body{
+	margin-top: 15px;
+}

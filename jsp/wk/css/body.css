@@ -1,0 +1,248 @@
+BODY {
+	FONT-SIZE: 12px;
+	FONT-FAMILY: Verdana, Tahoma, Arial, ����, Helvetica, sans-serif
+}
+
+A:link {
+	COLOR: #ff6600
+}
+
+A:visited {
+	COLOR: #000000
+}
+
+A:hover {
+	BACKGROUND: #ffe3b7;
+	COLOR: #000000
+}
+
+A.image:hover {
+	BACKGROUND: none transparent scroll repeat 0% 0%;
+	COLOR: #000000
+}
+
+P {
+	FONT-SIZE: 12px;
+	MARGIN: 0px 0px 5px;
+	COLOR: black;
+	LINE-HEIGHT: 14px;
+	TEXT-ALIGN: left
+}
+
+H1 {
+	MARGIN-TOP: 10px;
+	FONT-WEIGHT: bold;
+	MARGIN-BOTTOM: 10px;
+	COLOR: black
+}
+
+H2 {
+	MARGIN-TOP: 10px;
+	FONT-WEIGHT: bold;
+	MARGIN-BOTTOM: 10px;
+	COLOR: black
+}
+
+H3 {
+	MARGIN-TOP: 10px;
+	FONT-WEIGHT: bold;
+	MARGIN-BOTTOM: 10px;
+	COLOR: black
+}
+
+H4 {
+	MARGIN-TOP: 10px;
+	FONT-WEIGHT: bold;
+	MARGIN-BOTTOM: 10px;
+	COLOR: black
+}
+
+H5 {
+	MARGIN-TOP: 10px;
+	FONT-WEIGHT: bold;
+	MARGIN-BOTTOM: 10px;
+	COLOR: black
+}
+
+H6 {
+	MARGIN-TOP: 10px;
+	FONT-WEIGHT: bold;
+	MARGIN-BOTTOM: 10px;
+	COLOR: black
+}
+
+H1 {
+	FONT-SIZE: 18px;
+	LINE-HEIGHT: 24px
+}
+
+H2 {
+	FONT-SIZE: 16px;
+	LINE-HEIGHT: 22px
+}
+
+H3 {
+	FONT-SIZE: 14px;
+	LINE-HEIGHT: 18px
+}
+
+H4 {
+	FONT-SIZE: 12px;
+	LINE-HEIGHT: 16px
+}
+
+H5 {
+	FONT-SIZE: 10px;
+	LINE-HEIGHT: 14px
+}
+
+H6 {
+	FONT-SIZE: 9px;
+	LINE-HEIGHT: 12px
+}
+
+Form {
+	margin: 0;;
+	padding: 0em;
+}
+
+.TABLE_NOBORDER {
+	BORDER-RIGHT: #9e9e9e 0px solid;
+	BORDER-TOP: #9e9e9e 0px solid;
+	MARGIN: 0px 0px 0px;
+	BORDER-LEFT: #9e9e9e 0px solid;
+	BORDER-BOTTOM: #9e9e9e 0px solid
+}
+
+TABLE {
+	font-size: 9pt;
+	BORDER-RIGHT: #0066CC 1px solid;
+	BORDER-TOP: #0066CC 1px solid;
+	MARGIN: 0px 0px 5px;
+	BORDER-LEFT: #0066CC 1px solid;
+	BORDER-BOTTOM: #0066CC 1px solid
+}
+
+TH {
+	background-image: url("../images/BG_T_TD.gif");
+	font-size: 9pt;
+	color: #FFFFFF;
+	font-weight: bolder;
+}
+
+TH A:link {
+	FONT-WEIGHT: bold;
+	COLOR:  #FFFFFF;
+	TEXT-DECORATION: none
+}
+
+TH A:visited {
+	FONT-WEIGHT: bold;
+	COLOR: #FFFFFF;
+	TEXT-DECORATION: none
+}
+
+TH A:hover {
+	FONT-WEIGHT: bold;
+	COLOR: #222222;
+	TEXT-DECORATION: none
+}
+
+TR {
+	PADDING-RIGHT: 5px;
+	PADDING-LEFT: 5px;
+	FONT-SIZE: 12px;
+	PADDING-BOTTOM: 0px;
+	COLOR: #000000;
+	PADDING-TOP: 2px;;
+	BACKGROUND-COLOR: expression(( this . sectionRowIndex % 2 == 0) ?
+		"#ECF6FF" : "#E5F3FF" )
+}
+
+.dataLabel {
+	FONT-WEIGHT: normal;
+	FONT-SIZE: 12px;
+	COLOR: #000000;
+	LINE-HEIGHT: 16px;
+	BACKGROUND-COLOR: #f0f0f0;
+	TEXT-ALIGN: right
+}
+
+.dataField {
+	FONT-WEIGHT: normal;
+	FONT-SIZE: 12px;
+	COLOR: #000000;
+	LINE-HEIGHT: 16px;
+	BACKGROUND-COLOR: #ffffff;
+	TEXT-ALIGN: left
+}
+
+INPUT {
+	BORDER-RIGHT: #444444 1px solid;
+	BORDER-TOP: #444444 1px solid;
+	FONT-SIZE: 12px;
+	BACKGROUND: #ffffff;
+	BORDER-LEFT: #444444 1px solid;
+	BORDER-BOTTOM: #444444 1px solid;
+}
+
+.button {
+	BORDER-RIGHT: #444444 1px solid;
+	BORDER-TOP: #444444 1px solid;
+	FONT-WEIGHT: normal;
+	FONT-SIZE: 12px;
+	BACKGROUND: url(../images/formButtonBg.gif) #ffffff repeat-x 50% bottom;
+	BORDER-LEFT: #444444 1px solid;
+	COLOR: #444444;
+	PADDING-TOP: 2px;
+	BORDER-BOTTOM: #444444 1px solid
+}
+
+.checkbox {
+	BORDER-RIGHT: 0px;
+	PADDING-RIGHT: 0px;
+	BORDER-TOP: 0px;
+	PADDING-LEFT: 0px;
+	BACKGROUND: none transparent scroll repeat 0% 0%;
+	PADDING-BOTTOM: 0px;
+	MARGIN: 0px;
+	BORDER-LEFT: 0px;
+	PADDING-TOP: 0px;
+	BORDER-BOTTOM: 0px
+}
+
+TEXTAREA {
+	BORDER-RIGHT: #888888 1px solid;
+	BORDER-TOP: #888888 1px solid;
+	BORDER-LEFT: #888888 1px solid;
+	BORDER-BOTTOM: #888888 1px solid
+}
+
+#title {
+	BORDER-RIGHT: #888888 1px solid;
+	PADDING-RIGHT: 0px;
+	BORDER-TOP: 0px;
+	PADDING-LEFT: 6px;
+	BACKGROUND: url(images/BG_T_TD.gif) repeat-x;
+	PADDING-BOTTOM: 0px;
+	BORDER-LEFT: #888888 1px solid;
+	PADDING-TOP: 6px;
+	BORDER-BOTTOM: #888888 1px solid;
+	HEIGHT: 18px
+}
+
+#title P {
+	PADDING-RIGHT: 0px;
+	PADDING-LEFT: 0px;
+	FONT-WEIGHT: bold;
+	PADDING-BOTTOM: 0px;
+	MARGIN: 0px;
+	COLOR: white;
+	PADDING-TOP: 0px
+}
+#select_iframe{
+	position:absolute;
+	width:100%;
+	heigth:100%;
+	z-index:-1;
+}
