@@ -76,6 +76,7 @@ public class DispatcherController {
 	public DispatcherController(){
 		
 	}
+	//TODO 事务、异步
 	@Transactional
 	@RequestMapping(value = "/{reqPath:query|update|delete|insert|excel|batchUpdate|batchInsert|insertOrUpdate}.htm", method = RequestMethod.GET)
 	public Object crub(@PathVariable String reqPath,HttpServletRequest req,HttpServletResponse resp){
@@ -251,7 +252,7 @@ public class DispatcherController {
 	 * @param reqPath
 	 * @return
 	 */
-	@RequestMapping(value = "/{reqPath}.htm")
+	@RequestMapping(value = "/**.htm")
 	public ModelAndView goToPage(@PathVariable String reqPath ,HttpServletRequest request){
 		ModelAndView mav = new ModelAndView();
 		String reqUri = request.getRequestURI() ;
