@@ -12,8 +12,9 @@ public class TD extends Element{
 	public String toString() {
 		if(StringUtils.isNotBlank(this.fld) ){
 			String attr = StringUtils.nullToString(this.getAttr())  ;
-			if(attr.equals("") || attr.indexOf("fld=")==-1  ){
-				this.setAttr(StringUtils.nullToString(this.getAttr())+" fld=\""+this.fld+"\"");
+			String fldAttr = " fld=\""+this.fld+"\"";
+			if(attr.equals("") || attr.indexOf(fldAttr)==-1  ){
+				this.setAttr(attr+fldAttr);
 			}
 		}
 		return StringUtils.fillTpl(tpl, this);

@@ -3,10 +3,7 @@ package x.y.util;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -89,7 +86,7 @@ public class StringUtils {
 		}
 		return list;
 	}
-	
+
 	public static void main(String[] args) {
 		System.out.println(stringToList("a|b","|"));
 	}

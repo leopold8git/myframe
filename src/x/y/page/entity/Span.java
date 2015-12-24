@@ -8,8 +8,12 @@ public class Span extends Element{
 	
 	@Override
 	public String toString() {
-		if(StringUtils.isNotBlank(this.fld)){
-			this.setAttr(StringUtils.nullToString(this.getAttr())+" fld=\""+this.fld+"\"");
+		if(StringUtils.isNotBlank(this.fld) ){
+			String attr = StringUtils.nullToString(this.getAttr())  ;
+			String fldAttr = " fld=\""+this.fld+"\"";
+			if(attr.equals("") || attr.indexOf(fldAttr)==-1  ){
+				this.setAttr(attr+fldAttr);
+			}
 		}
 		return StringUtils.fillTpl(tpl, this);
 	}

@@ -21,11 +21,19 @@ public class Select extends Element {
 
 	@Override
 	public String toString() {
-		if(StringUtils.isNotBlank(this.fld)){
-			this.setAttr(StringUtils.nullToString(this.getAttr())+" fld=\""+this.fld+"\"");
+		if(StringUtils.isNotBlank(this.fld) ){
+			String attr = StringUtils.nullToString(this.getAttr())  ;
+			String fldAttr = " fld=\""+this.fld+"\"";
+			if(attr.equals("") || attr.indexOf(fldAttr)==-1  ){
+				this.setAttr(attr+fldAttr);
+			}
 		}
-		if(StringUtils.isNotBlank(this.dataUrl)){
-			this.setAttr(StringUtils.nullToString(this.getAttr())+" dataUrl=\""+this.dataUrl+"\"");
+		if(StringUtils.isNotBlank(this.dataUrl) ){
+			String attr = StringUtils.nullToString(this.getAttr())  ;
+			String fldAttr = " dataUrl=\""+this.dataUrl+"\"";
+			if(attr.equals("") || attr.indexOf(fldAttr)==-1  ){
+				this.setAttr(attr+fldAttr);
+			}
 		}
 		return StringUtils.fillTpl(tpl, this);
 	}

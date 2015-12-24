@@ -4,21 +4,20 @@ import x.y.util.StringUtils;
 
 public class Label extends Element{
 	
-	private String tpl = "<label id=\"{id}\">{content}</label>";
+	private String tpl = "<label id=\"{id}\" for=\"{relId}\">{content}</label>";
 	
-	private String content;
+	private String relId;
 	
 	@Override
 	public String toString() {
 		return StringUtils.fillTpl(tpl, this);
 	}
 
-	public String getContent() {
-		return content;
+	public String getRelId() {
+		return relId;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setRelId(String relId) {
+		this.relId = relId;
 	}
-
 }

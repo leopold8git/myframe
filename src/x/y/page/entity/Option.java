@@ -2,7 +2,7 @@ package x.y.page.entity;
 
 import x.y.util.StringUtils;
 
-public class Option {
+public class Option extends Element{
 		private String optTpl = "<option {attr}>{attrVal}</option>";
 		private String attr ; 
 		private String attrVal ;
@@ -52,17 +52,35 @@ public class Option {
 		} 
 		
 		public String toString(){
-			if(StringUtils.isNotBlank(this.namefld)){
-				this.setAttr(StringUtils.nullToString(this.getAttr())+" namefld=\""+this.namefld+"\"");
+
+			if(StringUtils.isNotBlank(this.namefld) ){
+				String attr = StringUtils.nullToString(this.getAttr())  ;
+				String fldAttr = " namefld=\""+this.namefld+"\"";
+				if(attr.equals("") || attr.indexOf(fldAttr)==-1  ){
+					this.setAttr(attr+fldAttr);
+				}
 			}
-			if(StringUtils.isNotBlank(this.valuefld)){
-				this.setAttr(StringUtils.nullToString(this.getAttr())+" valuefld=\""+this.valuefld+"\"");
+
+			if(StringUtils.isNotBlank(this.valuefld) ){
+				String attr = StringUtils.nullToString(this.getAttr())  ;
+				String fldAttr = " valuefld=\""+this.valuefld+"\"";
+				if(attr.equals("") || attr.indexOf(fldAttr)==-1  ){
+					this.setAttr(attr+fldAttr);
+				}
 			}
-			if(StringUtils.isNotBlank(this.name)){
-				this.setAttrVal(StringUtils.nullToString(this.getAttrVal())+this.name);
+			if(StringUtils.isNotBlank(this.name) ){
+				String attr = StringUtils.nullToString(this.getAttr())  ;
+				String fldAttr = " name=\""+this.name+"\"";
+				if(attr.equals("") || attr.indexOf(fldAttr)==-1  ){
+					this.setAttr(attr+fldAttr);
+				}
 			}
-			if(StringUtils.isNotBlank(this.value)){
-				this.setAttr(StringUtils.nullToString(this.getAttr())+"value=\""+this.value+"\"");
+			if(StringUtils.isNotBlank(this.value) ){
+				String attr = StringUtils.nullToString(this.getAttr())  ;
+				String fldAttr = " value=\""+this.value+"\"";
+				if(attr.equals("") || attr.indexOf(fldAttr)==-1  ){
+					this.setAttr(attr+fldAttr);
+				}
 			}
 			return StringUtils.fillTpl(optTpl, this);
 		}

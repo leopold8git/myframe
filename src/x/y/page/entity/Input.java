@@ -16,17 +16,35 @@ public class Input extends Element {
 	
 	@Override
 	public String toString() {
-		if(StringUtils.isNotBlank(this.fld)){
-			this.setAttr(StringUtils.nullToString(this.getAttr())+" fld=\""+this.fld+"\"");
+
+		if(StringUtils.isNotBlank(this.fld) ){
+			String attr = StringUtils.nullToString(this.getAttr())  ;
+			String fldAttr = " fld=\""+this.fld+"\"";
+			if(attr.equals("") || attr.indexOf(fldAttr)==-1  ){
+				this.setAttr(attr+fldAttr);
+			}
 		}
-		if(StringUtils.isNotBlank(this.className)){
-			this.setAttr(StringUtils.nullToString(this.getAttr())+" class=\""+this.className+"\"");
+		if(StringUtils.isNotBlank(this.className) ){
+			String attr = StringUtils.nullToString(this.getAttr())  ;
+			String fldAttr = " class=\""+this.className+"\"";
+			if(attr.equals("") || attr.indexOf(fldAttr)==-1  ){
+				this.setAttr(attr+fldAttr);
+			}
 		}
-		if(StringUtils.isNotBlank(this.onclick)){
-			this.setAttr(StringUtils.nullToString(this.getAttr())+" onclick=\""+this.onclick+"\"");
+
+		if(StringUtils.isNotBlank(this.onclick) ){
+			String attr = StringUtils.nullToString(this.getAttr())  ;
+			String fldAttr = " onclick=\""+this.onclick+"\"";
+			if(attr.equals("") || attr.indexOf(fldAttr)==-1  ){
+				this.setAttr(attr+fldAttr);
+			}
 		}
-		if(StringUtils.isNotBlank(this.value)){
-			this.setAttr(StringUtils.nullToString(this.getAttr())+" value=\""+this.value+"\"");
+		if(StringUtils.isNotBlank(this.value) ){
+			String attr = StringUtils.nullToString(this.getAttr())  ;
+			String fldAttr = " value=\""+this.value+"\"";
+			if(attr.equals("") || attr.indexOf(fldAttr)==-1  ){
+				this.setAttr(attr+fldAttr);
+			}
 		}
 		return StringUtils.fillTpl(tpl, this);
 	}
