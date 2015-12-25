@@ -249,11 +249,11 @@ public class DispatcherController {
 	/**
 	 * 除crub外的其它操作
 	 * @TODO 以下这种写法，思路是 请求 edit/edit.htm 则界面为edit/edit.jsp
-	 * @param reqPath
+	 * @param request
 	 * @return
 	 */
 	@RequestMapping(value = "/**.htm")
-	public ModelAndView goToPage(@PathVariable String reqPath ,HttpServletRequest request){
+	public ModelAndView goToPage(HttpServletRequest request){
 		ModelAndView mav = new ModelAndView();
 		String reqUri = request.getRequestURI() ;
 //		if(SpringBeanUtils.hasBean(reqPath)){

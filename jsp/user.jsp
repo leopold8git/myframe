@@ -8,9 +8,8 @@
     <e:td fid="tds" fld="userId"></e:td>
     <e:td fid="tds" fld="username"></e:td>
 </e:queryPage>
-<%--
 <script type="text/javascript">
     $(function(){
         query();
     });
-</script>--%>
+</script>
