@@ -174,6 +174,46 @@
       <rtexprvalue>true</rtexprvalue>
     </attribute>
   </tag>
+
+  <tag>
+    <name>eidtPage</name>
+    <tag-class>x.y.web.tags.EditPageTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      represent the jsp page
+    </description>
+    <attribute>
+      <name>formJson</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>template</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>js</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>style</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>title</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>viewName</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
   <!--input Tag-->
   <tag>
     <name>input</name>
@@ -183,26 +223,10 @@
       represent the jsp page
     </description>
     <attribute>
-      <name>className</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-    <attribute>
-      <name>onclick</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-    <attribute>
-      <name>value</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-    <attribute>
       <name>clz</name>
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
     </attribute>
-
     <attribute>
       <name>id</name>
       <required>false</required>
@@ -229,6 +253,21 @@
       <rtexprvalue>true</rtexprvalue>
     </attribute>
     <attribute>
+      <name>className</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>onclick</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>value</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
       <name>type</name>
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
@@ -245,6 +284,26 @@
     </description>
 
     <attribute>
+      <name>clz</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>id</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>attr</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
       <name>fld</name>
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
@@ -257,6 +316,367 @@
     <attribute>
       <name>content</name>
       <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+  <!--Text tag-->
+  <tag>
+    <name>text</name>
+    <tag-class>x.y.web.tags.TextTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      represent the jsp page
+    </description>
+
+    <attribute>
+      <name>clz</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>id</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>attr</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>fld</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>fid</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>content</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+<!-- CheckBox Tag-->
+  <tag>
+    <name>checkbox</name>
+    <tag-class>x.y.web.tags.CheckBoxTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      represent the jsp page
+    </description>
+
+    <attribute>
+      <name>clz</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>id</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>attr</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>fld</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>fid</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+  <!--Form Tag-->
+  <tag>
+    <name>form</name>
+    <tag-class>x.y.web.tags.FormTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      represent the jsp page
+    </description>
+
+    <attribute>
+      <name>clz</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>id</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>attr</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>fld</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>fid</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>content</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+<!--Label Tag-->
+  <tag>
+    <name>label</name>
+    <tag-class>x.y.web.tags.LabelTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      represent the jsp page
+    </description>
+
+    <attribute>
+      <name>clz</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>id</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>attr</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>fld</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>fid</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>relId</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+  <!--Option-->
+  <tag>
+    <name>option</name>
+    <tag-class>x.y.web.tags.OptionTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      represent the jsp page
+    </description>
+
+    <attribute>
+      <name>clz</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>id</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>attr</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>fld</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>fid</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>attrVal</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>namefld</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>valuefld</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>value</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+<!--Select Tag-->
+  <tag>
+    <name>select</name>
+    <tag-class>x.y.web.tags.SelectTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      represent the jsp page
+    </description>
+
+    <attribute>
+      <name>clz</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>id</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>attr</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>fld</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>fid</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>dataUrl</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+<!--Span Tag-->
+  <tag>
+    <name>span</name>
+    <tag-class>x.y.web.tags.SpanTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      represent the jsp page
+    </description>
+
+    <attribute>
+      <name>clz</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>id</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>attr</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>fld</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>fid</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+  <!--TextArea Tag-->
+  <tag>
+    <name>textarea</name>
+    <tag-class>x.y.web.tags.TextAreaTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      represent the jsp page
+    </description>
+
+    <attribute>
+      <name>clz</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>id</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>attr</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>fld</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>fid</name>
+      <required>true</required>
       <rtexprvalue>true</rtexprvalue>
     </attribute>
   </tag>
