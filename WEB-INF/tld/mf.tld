@@ -176,7 +176,7 @@
   </tag>
 
   <tag>
-    <name>eidtPage</name>
+    <name>editPage</name>
     <tag-class>x.y.web.tags.EditPageTag</tag-class>
     <body-content>JSP</body-content>
     <description>
@@ -345,11 +345,6 @@
     </attribute>
     <attribute>
       <name>attr</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-    <attribute>
-      <name>fld</name>
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
     </attribute>

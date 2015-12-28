@@ -22,11 +22,11 @@ public class QueryPageTag extends PageTag {
 
     private String headers;//split by |
 
-    //查询名称
+    //鏌ヨ鍚嶇О
     private String qns;
 
      public QueryPageTag(){
-         System.out.println("创建QueryPageTag");
+         System.out.println("鍒涘缓QueryPageTag");
      }
 
     @Override

@@ -68,7 +68,7 @@ ${style}
 
 				</table>
 				</div>
-					</form>
+		</form>
 </div>
 </body>
 <script type="text/javascript">

@@ -1,5 +1,6 @@
 package x.y.page.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import x.y.util.StringUtils;
@@ -13,7 +14,7 @@ public class EditPage extends Page{
 	
 	private String formJson ;
 	
-	private List<Element> elements ;
+	private List<Element> elements = new ArrayList<Element>();
 	
 	public String getFormJson() {
 		return formJson;
