@@ -16,40 +16,21 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package x.y.web.tags;
-
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.tagext.TagSupport;
+package x.y.web.tags.authz;
 
 /**
  * @since 0.1
  */
-public abstract class RoleTag extends SecureTag {
+public class LacksRoleTag extends RoleTag {
 
     //TODO - complete JavaDoc
 
-    private String name = null;
-
-    public RoleTag() {
+    public LacksRoleTag() {
     }
 
-    public String getName() {
-        return name;
+    protected boolean showTagBody(String roleName) {
+        boolean hasRole = getSubject() != null && getSubject().hasRole(roleName);
+        return !hasRole;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int onDoStartTag() throws JspException {
-        boolean show = showTagBody(getName());
-        if (show) {
-            return TagSupport.EVAL_BODY_INCLUDE;
-        } else {
-            return TagSupport.SKIP_BODY;
-        }
-    }
-
-    protected abstract boolean showTagBody(String roleName);
 
 }

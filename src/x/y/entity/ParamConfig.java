@@ -2,6 +2,7 @@ package x.y.entity;
 
 import java.util.Map;
 
+import x.y.service.ParamHandler;
 import x.y.service.ResultHandler;
 
 /**
@@ -16,6 +17,11 @@ public class ParamConfig {
 	 * 结果处理
 	 */
 	private ResultHandler resultHandler;
+
+	/**
+	 * 参数处理
+	 */
+	private ParamHandler paramHandler ;
 	
 	/**
 	 * 关联处理方法
@@ -46,5 +52,13 @@ public class ParamConfig {
 
 	public void setConfigMap(Map configMap) {
 		this.configMap = configMap;
+	}
+
+	public ParamHandler getParamHandler() {
+		return paramHandler;
+	}
+
+	public void setParamHandler(ParamHandler paramHandler) {
+		this.paramHandler = paramHandler;
 	}
 }

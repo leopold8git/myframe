@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package x.y.web.tags;
+package x.y.web.tags.authz;
 
 import x.y.subject.Subject;
 

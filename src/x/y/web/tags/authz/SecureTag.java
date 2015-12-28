@@ -16,56 +16,50 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package x.y.web.tags;
+package x.y.web.tags.authz;
 
+import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.TagSupport;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import x.y.subject.Subject;
 
 /**
  * @since 0.1
  */
-public abstract class PermissionTag extends SecureTag {
+public abstract class SecureTag extends TagSupport {
 
-    //TODO - complete JavaDoc
+	private static final Log log = LogFactory.getLog(SecureTag.class);
+	
+	protected PageContext pageContext;
 
-    private String name = null;
-
-    public PermissionTag() {
+    public SecureTag() {
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    protected Subject getSubject() {
+    	HttpSession s = pageContext.getSession();
+    	return  s==null?null:(Subject)s.getAttribute(Subject.sessionKey);
     }
 
     protected void verifyAttributes() throws JspException {
-        String permission = getName();
-
-        if (permission == null || permission.length() == 0) {
-            String msg = "The 'name' tag attribute must be set.";
-            throw new JspException(msg);
-        }
     }
 
-    public int onDoStartTag() throws JspException {
+    public int doStartTag() throws JspException {
 
-        String p = getName();
+        verifyAttributes();
 
-        boolean show = showTagBody(p);
-        if (show) {
-            return TagSupport.EVAL_BODY_INCLUDE;
-        } else {
-            return TagSupport.SKIP_BODY;
-        }
+        return onDoStartTag();
     }
 
-    protected boolean isPermitted(String p) {
-        return getSubject() != null && getSubject().isPermitted(p);
-    }
+    public abstract int onDoStartTag() throws JspException;
 
-    protected abstract boolean showTagBody(String p);
-
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		this.pageContext = pageContext;
+	}
+    
 }

@@ -9,7 +9,7 @@ import x.y.web.authz.WildcardPermission;
 /**
  * 用户信息
  * @author ASUS
- *
+ * 在初始化用户信息时，要初始化角色、权限信息
  */
 public class User implements Subject {
 	

@@ -16,20 +16,20 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package x.y.web.tags;
+package x.y.web.tags.authz;
 
 /**
  * @since 0.1
  */
-public class HasRoleTag extends RoleTag {
+public class LacksPermissionTag extends PermissionTag {
 
     //TODO - complete JavaDoc
 
-    public HasRoleTag() {
+    public LacksPermissionTag() {
     }
 
-    protected boolean showTagBody(String roleName) {
-        return getSubject() != null && getSubject().hasRole(roleName);
+    protected boolean showTagBody(String p) {
+        return !isPermitted(p);
     }
 
 }

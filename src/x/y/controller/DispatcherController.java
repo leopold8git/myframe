@@ -37,6 +37,7 @@ import x.y.page.entity.EditPage;
 import x.y.page.entity.Page;
 import x.y.page.entity.QueryPage;
 import x.y.service.CrudService;
+import x.y.service.ParamHandler;
 import x.y.service.impl.ExcelServiceImpl;
 import x.y.service.impl.InsertOrUpdateServiceImpl;
 import x.y.util.SpringBeanUtils;
@@ -83,14 +84,22 @@ public class DispatcherController {
 		Object resObj = null;
 	try {
 			Map reqMap = SpringUtils.getRequestPramaMap(req);
-			Map params = SpringUtils.getParams(reqMap,req);
+			Map params = SpringUtils.getParams(reqMap, req);
+
+			//以下要递归
+			ParamConfig pc = SpringUtils.getParamConfig(req);
+
+			ParamHandler paramHandler = pc.getParamHandler() ;
+			//参数处理
+		   if(paramHandler != null){
+			   paramHandler.handeParams(params);
+		   }
 			
 			resObj = doService(reqPath,params,resp);
 			
 			if(resObj == null) return null;
 			
-			//以下要递归
-			ParamConfig pc = SpringUtils.getParamConfig(req);
+
 			if(pc != null && pc.getResultHandler() != null){
 				resObj =  pc.getResultHandler().handlerResult(params, resObj, req, resp);
 			}

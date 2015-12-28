@@ -8,6 +8,7 @@ import x.y.web.authz.Permission;
 /**
  * 角色
  * @author ASUS
+ * 角色中含多个permission
  */
 public class Role {
 
