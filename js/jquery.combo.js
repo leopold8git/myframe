@@ -143,7 +143,7 @@
 					ul.css({background: 'none repeat scroll 0 0 #f3f9fc',
 						border: '1px solid #57a8e4',
 						left: '0',
-						overflowY: 'scroll',
+						overflow : 'scroll',
 						//    position: 'absolute',
 						top: '0px',
 						margin:0,
@@ -157,7 +157,8 @@
 						cursor: 'default',
 						height : '20px',
 						lineHeight: '20px',
-						paddingLeft: '2px'
+						paddingLeft: '2px',
+						whiteSpace : 'nowrap'
 					}
 					var actualH = 0;
 					//添加默认值
@@ -246,7 +247,7 @@
 					var maxH = conf.maxHeight || 150;
 					if(actualH<=maxH){
 						ul.height(actualH);
-						ul.css("overflow","hidden");
+						ul.css("overflow","scroll");
 					}else{
 						ul.height(maxH);
 					}
