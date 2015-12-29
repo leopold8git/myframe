@@ -2,9 +2,13 @@ package x.y.entity;
 
 import x.y.web.authz.Permission;
 
+import javax.persistence.*;
+
 /**
  * Created by Administrator on 2015/12/29.
  */
+@Entity
+@Table(name = "role")
 public class Resource implements Permission {
 
     private String resourceId ;
@@ -21,7 +25,9 @@ public class Resource implements Permission {
         }
         return  false ;
     }
-
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public String getResourceId() {
         return resourceId;
     }
@@ -30,6 +36,8 @@ public class Resource implements Permission {
         this.resourceId = resourceId;
     }
 
+    @Basic
+    @Column(name = "resourceName")
     public String getResourceName() {
         return resourceName;
     }

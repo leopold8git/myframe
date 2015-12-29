@@ -103,6 +103,9 @@ public class User implements Subject,Serializable {
 		this.authenticated = authenticated;
 	}
 
+	@ManyToMany
+	@JoinTable(name="user_role",joinColumns=@JoinColumn(name="userId"),
+			inverseJoinColumns=@JoinColumn(name="roleId"))
 	public List<Role> getRoleList() {
 		return roleList;
 	}
