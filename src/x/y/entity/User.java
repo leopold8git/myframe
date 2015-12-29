@@ -1,17 +1,28 @@
 package x.y.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import x.y.subject.Subject;
 import x.y.web.authz.Permission;
 import x.y.web.authz.WildcardPermission;
+import javax.persistence.*;
 /**
  * 用户信息
  * @author ASUS
  * 在初始化用户信息时，要初始化角色、权限信息
  */
-public class User implements Subject {
+@Entity
+@Table(name = "user")
+public class User implements Subject,Serializable {
+
+	private String id ;
+
+	private String username ;
+
+	private String password ;
+
 	
 	private boolean authenticated;
 	//一个用户可以有多个角色
@@ -100,4 +111,34 @@ public class User implements Subject {
 		this.roleList = roleList;
 	}
 
+	@Basic
+	@Column(name = "username")
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	@Basic
+	@Column(name = "password")
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 }

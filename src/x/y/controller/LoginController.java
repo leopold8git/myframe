@@ -1,6 +1,7 @@
 package x.y.controller;
 
 import net.sf.json.JSONObject;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import x.y.entity.UploadFile;
+import x.y.entity.User;
 import x.y.service.CrudService;
 import x.y.util.FileUtils;
 import x.y.util.SpringUtils;
@@ -45,8 +47,27 @@ public class LoginController {
 		String password = (String) params.get("password");
 		String repassword = (String) params.get("repassword");
 		if(StringUtils.isNotBlank(password) && password.equals(repassword)){
-			Map user = queryService.getRecordForMap("select * from user where username=? and password=?",new Object[]{username,password});
-			if(user != null && user.size() == 0) {
+			String md5Pass = DigestUtils.md5Hex(password);
+			Map<String,Object> userMap = queryService.getRecordForMap("select * from user where username=? and password=?",new Object[]{username,md5Pass});
+			//TODO 初始化 user （含权限）
+			if(userMap != null && userMap.size() == 0) {
+				User user = new User();
+				user.setId((String) userMap.get("id"));
+				user.setUsername((String) userMap.get("username"));
+				//获取用户角色
+				String getRolesSql = "select * from role r,role_user ru where r.id = ru.roleId and ru.userId=?";
+				List<Map<String,Object>> roleList = queryService.getRecords(getRolesSql,new Object[]{userMap.get("id")});
+				StringBuffer roleStr = new StringBuffer();
+				for (Map<String,Object> m : roleList){
+					roleStr.append(m.get("id"));
+					roleStr.append(",");
+				}
+				if(roleStr.length()>0){
+					String sql = "select * from role r, role_resource rr , resource res where r.id = rr.roleId and res.id=rr.resourceId and r.id in(?)";
+					List<Map<String,Object>> roleResources = queryService.getRecords(sql,new Object[]{roleStr.toString().substring(0,roleStr.length()-1)});
+					//user
+				}
+
 				req.getSession().setAttribute("user", user);
 				res.put("code",1);
 			}
