@@ -4,9 +4,11 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.util.ReflectionUtils;
 import x.y.page.entity.Element;
 import x.y.tpl.FreeMarkerSingleton;
+import x.y.web.tags.authz.SecureTag;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.tagext.Tag;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -15,7 +17,7 @@ import java.util.List;
 
 /**
  * Created by Administrator on 2015/12/16.
- * ÆäËü½çÃæÔªËØTag¼Ì³ĞÕâ¸öÀà
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½Tagï¿½Ì³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  */
 public abstract class ElementTag extends TagSupport {
 
@@ -30,18 +32,23 @@ public abstract class ElementTag extends TagSupport {
     protected String attr;
 
     protected String fld;
-    //ÓÃÓÚÖ¸¶¨¸¸±êÇ©ÀàµÄ×Ö¶ÎÃû³Æ
+    //å¯¹åº”çˆ¶ç±»æ— ç´ id
     protected String fid ;
 
     public ElementTag(){
-        System.out.println("³õÊ¼»¯:"+this.getClass().getName());
+
     }
 
     @Override
     public int doStartTag() throws JspException {
         initElement();
-        if(StringUtils.isNotBlank(fid) && this.getParent() != null){
-            ElementTag pTag = (ElementTag)this.getParent();
+        Tag p = this.getParent();
+        //è¿‡æ»¤æ‰æƒé™æ ‡ç­¾
+        while(p != null && !(p instanceof ElementTag)){
+            p = p.getParent();
+        }
+        if(StringUtils.isNotBlank(fid) && p != null){
+            ElementTag pTag = (ElementTag)p;
             try {
                 pTag.handleElement(this);
             } catch (Exception e) {
@@ -69,10 +76,10 @@ public abstract class ElementTag extends TagSupport {
         return  element ;
     }
 
-    //×ÓÀàµ÷ÓÃ¸¸ÀàµÄ·½·¨
+
     protected void handleElement(ElementTag sub) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         String fid = sub.getFid();
-        //»ñÈ¡¸¸ÀàµÄ×Ö¶Î
+
         Field field = ReflectionUtils.findField(this.getDefaultClass(), fid);
         Class clz = field.getType();
         if(clz.isAssignableFrom(List.class)){
@@ -154,7 +161,7 @@ public abstract class ElementTag extends TagSupport {
     }
     @Override
     public int doEndTag() throws JspException {
-        //Çå¿Õelement
+        //reset element
         this.element = null ;
         return super.doEndTag();
     }

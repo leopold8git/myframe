@@ -7,6 +7,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.JspTag;
 import javax.servlet.jsp.tagext.TagSupport;
+import java.util.Arrays;
 
 /**
  * Created by Administrator on 2015/12/15.
@@ -23,8 +24,12 @@ public class PageTag extends ElementTag {
 
     private String title;
 
-    //½á¹û½çÃæÃû³Æ
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private String viewName;
+
+    private String jsLink ; //ç”¨ | åˆ†éš”
+
+    private String styleLink ;  //ç”¨ | åˆ†éš”
 
 
     @Override
@@ -46,6 +51,12 @@ public class PageTag extends ElementTag {
         page.setStyle(style);
         page.setTitle(title);
         page.setViewName(viewName);
+        if(jsLink != null){
+            page.setJsLink(Arrays.asList(jsLink.split("[|]")));
+        }
+        if(styleLink != null){
+            page.setStyleLink(Arrays.asList(styleLink.split("[|]")));
+        }
     }
 
 
@@ -102,4 +113,19 @@ public class PageTag extends ElementTag {
         this.viewName = viewName;
     }
 
+    public String getJsLink() {
+        return jsLink;
+    }
+
+    public void setJsLink(String jsLink) {
+        this.jsLink = jsLink;
+    }
+
+    public String getStyleLink() {
+        return styleLink;
+    }
+
+    public void setStyleLink(String styleLink) {
+        this.styleLink = styleLink;
+    }
 }

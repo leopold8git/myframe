@@ -12,6 +12,12 @@ import x.y.web.authz.WildcardPermission;
  * 在初始化用户信息时，要初始化角色、权限信息
  */
 public class User implements Subject {
+
+	private  Integer userId ;
+
+	private  String username ;
+
+	private  String password ;
 	
 	private boolean authenticated;
 	//一个用户可以有多个角色
@@ -56,7 +62,8 @@ public class User implements Subject {
 	public boolean hasRole(String roleIdentifier) {
 		for (int i = 0; i < roleList.size(); i++) {
 			Role r = roleList.get(i);
-			if(roleIdentifier != null && roleIdentifier.equals(r.getRoleId())){
+//			if(roleIdentifier != null && roleIdentifier.equals(r.getRoleId())){
+			if(roleIdentifier != null && roleIdentifier.equals(r.getRoleName())){
 				return true;
 			}
 		}
@@ -100,4 +107,27 @@ public class User implements Subject {
 		this.roleList = roleList;
 	}
 
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 }

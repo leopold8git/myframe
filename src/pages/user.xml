@@ -229,7 +229,7 @@
   		<property name="configMap">
   			<map>
                 <entry key="tableName" value="User" />
-                <entry key="module.userId" value="#{ T(x.y.util.DBUtils).getSerialNo('User')+''}" />
+               <!-- <entry key="module.userId" value="#{ T(x.y.util.DBUtils).getSerialNo('User')+''}" />-->
             </map>
   		</property>
   		

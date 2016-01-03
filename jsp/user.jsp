@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" isELIgnored="false"%>
 <%@ taglib prefix="e" uri="http://x.y.easyweb/tags"%>
-<e:queryPage formJson="query.htm?d=queryUsers" headers="用户编号|用户名称|操作" template="query.ftl" title="账户查询" qns="账户查询" >
+<e:queryPage formJson="query.htm?d=queryUsers" headers="用户编号|用户名称|分配角色|操作" template="query.ftl" title="账户查询" qns="账户查询" >
     <e:text content="用户编号：" fid="elements"></e:text>
     <e:input fid="elements" id="userId" name="query.userId"></e:input>
     <e:text content="用户名：" fid="elements"></e:text>
@@ -9,8 +9,11 @@
     <e:input fid="elements" id="query" type="button" value="查询" onclick="query()" className="btn"></e:input>
     <e:td fid="tds" fld="userId"></e:td>
     <e:td fid="tds" fld="username"></e:td>
+    <e:td fid="tds" fld="setRole(userId)"></e:td>
     <e:td fid="tds" fld="opt(userId)"></e:td>
-    <e:input fid="bottomElements" type="button" value="新增" className="bt_add" onclick="add()"></e:input>
+    <e:hasRole name="guest">
+        <e:input fid="bottomElements" type="button" value="新增" className="bt_add" onclick="add()"></e:input>
+    </e:hasRole>
 </e:queryPage>
 <script type="text/javascript">
     $(function(){
@@ -50,6 +53,20 @@
 
     function add(){
        $.dialog.open('editUser.htm',{
+            width : 400,
+            height : 300,
+            padding: 10,
+            ok : function(frame){frame.save(this);return false;},
+            cancel : function(){}
+        });
+    }
+
+    function setRole(userId){
+        return createA('分配角色','javascript:allocateRole('+userId+');')
+    }
+
+    function allocateRole(userId){
+        $.dialog.open('allocateRoles.htm?userId='+userId,{
             width : 400,
             height : 300,
             padding: 10,

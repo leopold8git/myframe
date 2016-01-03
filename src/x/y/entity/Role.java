@@ -3,6 +3,7 @@ package x.y.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.omg.PortableInterceptor.INACTIVE;
 import x.y.web.authz.Permission;
 
 /**
@@ -12,17 +13,17 @@ import x.y.web.authz.Permission;
  */
 public class Role {
 
-	private String roleId;
+	private Integer roleId;
 	
 	private String roleName;
 	
 	private List<Permission> permisionList = new ArrayList<Permission>();
 
-	public String getRoleId() {
+	public Integer getRoleId() {
 		return roleId;
 	}
 
-	public void setRoleId(String roleId) {
+	public void setRoleId(Integer roleId) {
 		this.roleId = roleId;
 	}
 

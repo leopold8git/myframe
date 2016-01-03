@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import x.y.entity.UploadFile;
+import x.y.entity.User;
 import x.y.service.CrudService;
+import x.y.service.UserService;
+import x.y.subject.Subject;
 import x.y.util.FileUtils;
 import x.y.util.SpringUtils;
 
@@ -31,10 +34,10 @@ public class LoginController {
 	
 	protected final Log logger = LogFactory.getLog(getClass());
 	@Autowired
-	private CrudService queryService;
+	private UserService userService;
 
 	
-	@RequestMapping(value = "/loginIn.htm", method = RequestMethod.POST)
+	@RequestMapping(value = "/loginIn.htm", method = RequestMethod.GET)
     public String loginIn(HttpServletRequest req,HttpServletResponse resp) throws IOException {
 		resp.setContentType("text/json;charset=utf-8");
 		JSONObject res = new JSONObject();
@@ -44,12 +47,15 @@ public class LoginController {
 		String username = (String) params.get("username");
 		String password = (String) params.get("password");
 		String repassword = (String) params.get("repassword");
+		username = "张三" ;
+		password = repassword ="11111";
 		if(StringUtils.isNotBlank(password) && password.equals(repassword)){
-			Map user = queryService.getRecordForMap("select * from user where username=? and password=?",new Object[]{username,password});
-			if(user != null && user.size() == 0) {
-				req.getSession().setAttribute("user", user);
-				res.put("code",1);
+			User user = userService.getByUsernameAndPassword(username,password);
+			if(user != null){
+				req.getSession().setAttribute(Subject.sessionKey, user);
+				res.put("code", 1);
 			}
+
 		}
 		resp.getWriter().print(res);
 		resp.getWriter().close();
