@@ -103,6 +103,7 @@ import x.y.util.CollectionUtils;
  *
  * @since 0.9
  */
+//先按 : 分组  再按 ,分组
 public class WildcardPermission implements Permission, Serializable {
 
     //TODO - JavaDoc methods

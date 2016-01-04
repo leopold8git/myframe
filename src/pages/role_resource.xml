@@ -70,8 +70,6 @@
 	  			function save(){
 	  				var nodes = zTreeObj.getCheckedNodes(true);
 	  				alert($.toJSON(nodes))
-	  				
-	  				
 	  			}
 	  		]]>
 	  		</value>

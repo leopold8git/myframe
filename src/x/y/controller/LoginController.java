@@ -1,6 +1,7 @@
 package x.y.controller;
 
 import net.sf.json.JSONObject;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -47,10 +48,10 @@ public class LoginController {
 		String username = (String) params.get("username");
 		String password = (String) params.get("password");
 		String repassword = (String) params.get("repassword");
-		username = "张三" ;
-		password = repassword ="11111";
 		if(StringUtils.isNotBlank(password) && password.equals(repassword)){
-			User user = userService.getByUsernameAndPassword(username,password);
+			//md5加密
+			String md5Password = DigestUtils.md5Hex(password);
+			User user = userService.getByUsernameAndPassword(username,md5Password);
 			if(user != null){
 				req.getSession().setAttribute(Subject.sessionKey, user);
 				res.put("code", 1);
@@ -72,5 +73,6 @@ public class LoginController {
 		resp.getWriter().close();
 		return  null ;
 	}
+
 	
 }
