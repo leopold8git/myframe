@@ -29,6 +29,7 @@
 		self.data = [];
 		self.page = {"curPage":1,"pageNum":0};
 		elem = jQuery(elem);
+		elem.data("combo",self);
 		elemDom = elem.get(0);
 		jQuery.extend(self,
 			{
@@ -194,6 +195,14 @@
 							var j = data[i];
 							li.html(j[conf.optionField||'text']);
 							li.attr("val",j[conf.valueField||'value']); // 这里不要使用li.attr("value",xxx) , value 是元素固有的属性，当xxx为空时，如果是value，则li.attr("value") 会等于0
+							//选中 指定selectedValue 项
+							var sv = elem.attr("selectedValue") ;
+							if( sv && sv == j[conf.valueField||'value']){
+								elem.val(j[conf.optionField||'text']);
+								if(self.valueInput){
+									self.valueInput.val(sv);
+								}
+							}
 							li.mouseover(function(){
 								$(this).css("background","none repeat scroll 0 0 #57a8e4");
 							});
@@ -245,20 +254,25 @@
 					ul.attr("id",boxId);
 					this.getPopDiv().append(ul);
 					var maxH = conf.maxHeight || 150;
-					if(actualH<=maxH){
+					/*if(actualH<=maxH){
 						ul.height(actualH);
 						ul.css("overflow","scroll");
 					}else{
 						ul.height(maxH);
+					}*/
+					if(actualH>maxH){
+						ul.height(maxH);
+						ul.css("overflow","scroll");
 					}
 				},
 				getData : function(){
 					return this.data;
 				},
-				reloadUrl : function(){
-					if(conf.url){
+				reloadUrl : function(url){
+					var _url = url || conf.url
+					if( _url ){
 						var param = conf.page || {} ;
-						$.get(conf.url,param,function(res){
+						$.get(_url,param,function(res){
 							self.data = res.data;
 							conf.page = res.page ;
 							self.reloadData(self.data);
@@ -283,6 +297,7 @@
 
 					img.css({width:'10px',height:'10px',marginLeft:(d.width()-20)/2 +'px',marginTop:(d.height()-10)/2 +'px'});
 					d.append(img);
+					elem.data("downArrow",d);
 					$("body").append(d);
 					return d;
 				},
@@ -296,6 +311,13 @@
 					var name = elem.attr("name");
 					var value = elem.attr("val");
 					return "&"+name+"="+value;
+				},
+				getConf : function(){
+					return conf ;
+				},
+				clear : function(){
+					elem.data("pop_div").html('');
+					elem.data("downArrow").remove();
 				}
 			});
 	}
