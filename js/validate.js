@@ -26,9 +26,9 @@ $(function(){
 		    ChangeTips($(this),"remove",null);
 	});
 	
-	$("form").submit(function(){
+	/*$("form").submit(function(){
 	    return validateForm(this);
-	});
+	});*/
 });
 
 function validateBefore(thisObj){
@@ -63,9 +63,7 @@ function initValidateForm(){
 
 function validate(target){
     if($(target).attr("skipValidate"))return;
-    if($(target).attr("ajaxurl") != undefined){
-        ajax_validate($(target));
-    }else if($(target).attr("check") != undefined){
+    if($(target).attr("check") != undefined){
         diyValidate($(target).attr("check"),$(target));
     }else if($(target).attr("reg") == "CheckboxMenu"){
         checkboxMenuValidate($(target));
@@ -120,11 +118,7 @@ function validateForm(obj){
 		var isSubmit = true;
 		$(obj).find("[reg],[ajaxurl]:not([reg])").each(function(){
 		     if($(this).attr("skipValidate"))return;
-			 if($(this).attr("ajaxurl") != undefined){
-				if(!ajax_validate($(this))){
-					isSubmit = false;
-				}
-			}else if($(this).attr("check") != undefined){
+			if($(this).attr("check") != undefined){
                 if(!diyValidate($(this).attr("check"),$(this))){
                     isSubmit = false;
                 }
@@ -142,12 +136,7 @@ function validateForm(obj){
 				}
 			 }
 		});
-		if(typeof(isExtendsValidate) != "undefined"){
-   			if(isSubmit && isExtendsValidate){
-				return extendsValidate();
-			}
-   		}
-		 
+
 		return isSubmit; 
 }
 
@@ -175,6 +164,9 @@ function commonValidate(obj){
  	switch(regText){
 		case "number" :
 			regChar=/^-?[0-9]*$/;
+		break;
+		case "positiveNumber" :
+			regChar=/^[0-9]*$/;
 		break;
 		case "Float" :
 			regChar=/^[0-9]+\.?[0-9]*$/;
@@ -411,47 +403,33 @@ function isValidityBrithBy18IdCard(idCard18){
 function trim(str) {   
     return str.replace(/(^\s*)|(\s*$)/g, "");   
 } 
-/*function ajax_validate(obj){
-	
-	var url_str = obj.attr("ajaxurl");
-	if(url_str.indexOf("?") != -1){
-		url_str = url_str+"&"+obj.attr("name")+"="+obj.attr("value");
-	}else{
-		url_str = url_str+"?"+obj.attr("name")+"="+obj.attr("value");
-	}
-	var feed_back = $.ajax({url: url_str,cache: false,async: false}).responseText;
-	feed_back = feed_back.replace(/(^\s*)|(\s*$)/g, "");
-	if(feed_back == 'success'){
-		change_error_style(obj,"remove");
-		change_tip(obj,null,"remove");
-		return true;
-	}else{
-		change_error_style(obj,"add");
-		change_tip(obj,feed_back,"add");
-		return false;
-	}
-}*/
+
 function ajax_validate(obj){
-/*	if(dataName == undefined ){
-		var dataVal_str = obj.val();
-	}else{
-		var dataVal_str= dataName;
-	}*/
+	var pass = true;
 	var url_str = obj.attr("ajaxurl");
 	var dataName_str =obj.attr("name");
 	var dataVal_str = obj.val();
-	// alert(dataName_str + "," + dataVal_str )
-	var feed_back = $.ajax({url: url_str,cache: false,async: false,data:{number:dataVal_str}}).responseText;
-	feed_back = feed_back.replace(/(^\s*)|(\s*$)/g, "");
-	if(feed_back == 'success'){
-		change_error_style(obj,"remove");
-		change_tip(obj,null,"remove");
-		return true;
-	}else{
-		change_error_style(obj,"add");
-		change_tip(obj,feed_back,"add");
-		return false;
+	if(dataVal_str != null && dataVal_str != ''){
+		$.ajax({
+			"url" : url_str ,
+			"cache" : false,
+			"async" : false,
+			"data" : {"val":dataVal_str},
+			"success" : function(d){
+				if(d && d.code == "1"){
+					change_error_style(obj,"remove");
+					change_tip(obj,null,"remove");
+					return true;
+				}else{
+					change_error_style(obj,"add");
+					change_tip(obj, d?d.msg:null,"add");
+					pass = false;
+					return false;
+				}
+			}
+		});
 	}
+  return pass ;
 }
 
 
