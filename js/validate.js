@@ -117,7 +117,7 @@ function setStyle(isValid,target){
 function validateForm(obj){
 		var isSubmit = true;
 		$(obj).find("[reg],[ajaxurl]:not([reg])").each(function(){
-		     if($(this).attr("skipValidate"))return;
+		     if($(this).attr("skipValidate"))return ;
 			if($(this).attr("check") != undefined){
                 if(!diyValidate($(this).attr("check"),$(this))){
                     isSubmit = false;
@@ -166,7 +166,7 @@ function commonValidate(obj){
 			regChar=/^-?[0-9]*$/;
 		break;
 		case "positiveNumber" :
-			regChar=/^[0-9]*$/;
+			regChar=/^[1-9][0-9]*$/;
 		break;
 		case "Float" :
 			regChar=/^[0-9]+\.?[0-9]*$/;
@@ -222,7 +222,13 @@ function commonValidate(obj){
 	}
 	// alert(regText)
 	var reg = new RegExp(regChar);
-	var isMobile=/^(?:13\d|15\d)\d{5}(\d{3}|\*{3})$/;   
+	var isMobile=/^(?:13\d|15\d)\d{5}(\d{3}|\*{3})$/;
+
+	//ÔÊÐíÎª¿ÕÖµ
+	if((objValue==null || objValue=="") && allowNull == "true"){
+		return true;
+	}
+
 	if((objValue==null || objValue=="") && allowNull == false){
 		change_error_style(obj,"add");
 		change_tip(obj,null,"remove");

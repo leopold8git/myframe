@@ -304,8 +304,12 @@
 				getValue : function(){
 					return elem.attr("val");
 				},
-				setValue : function(val){
-					elem.attr("val",val);
+				setValue : function(value){
+					if(this.valueInput){
+						this.valueInput.val(value);
+					}
+					elem.val(value)
+					elem.attr("val",value);
 				},
 				getUrlParam : function(){
 					var name = elem.attr("name");
@@ -318,6 +322,29 @@
 				clear : function(){
 					elem.data("pop_div").html('');
 					elem.data("downArrow").remove();
+				},
+					resetPosition : function(){//由于文本框 的位置可能变化，所以下拉框与下拉箭头位置都会变
+					var meLeft = getElementLeft(elem.get(0));
+					var meTop = getElementTop(elem.get(0));
+					var d = elem.data("downArrow") ;
+					if(d){
+						d.css({lineHeight:elem.outerHeight()+'px',left :(meLeft+elem.width()-elem.height())+'px',top:meTop+'px',width:elem.outerHeight()+'px',height:elem.outerHeight()+'px'});
+						d.find("img").css({width:'10px',height:'10px',marginLeft:(d.width()-20)/2 +'px',marginTop:(d.height()-10)/2 +'px'});
+					}
+					var popDiv = elem.data("pop_div");
+					if(popDiv){
+						popDiv.css("min-width",elem.outerWidth());
+						if(conf.relativeLeft){
+							popDiv.css("left",(meLeft+conf.relativeLeft)+"px");
+						}else{
+							popDiv.css("left",meLeft+"px");
+						}
+						if(conf.relativeTop){
+							popDiv.css("top",(meLeft+elem.outerHeight()+conf.relativeTop)+"px");
+						}else{
+							popDiv.css("top",meTop+elem.outerHeight()+"px");
+						}
+					}
 				}
 			});
 	}
