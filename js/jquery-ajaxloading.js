@@ -3,7 +3,7 @@
  */
 /**
  * jquery ajax 加载时 通用 的  显示 正在加载等待 提示
- *
+ *  使用方法 ： 在界面引入些js 即可，调用 processObj.start   processObj.end
  */
 (function ($) {
     var ajaxCoreBaseUrl;
@@ -15,7 +15,7 @@
     var pos=ajaxCoreBaseUrl.lastIndexOf("/");
     if(pos>=0) ajaxCoreBaseUrl = ajaxCoreBaseUrl.substring(0,pos)+"/"; else ajaxCoreBaseUrl="";
 
-    var  processObj  = {} ;
+     var  processObj  = {} ;
 
     processObj.processStart = function(msg) {
         var that = this;
@@ -52,7 +52,7 @@
     }
 
     processObj.showText=function(text){
-        this.showHtml("<table><tr><td><img src='"+ajaxCoreBaseUrl+"img/loading.gif'></td><td nowrap>"+text+"</td></tr></table>",40);
+        this.showHtml("<table style='border:grey 1px solid;'><tr><td><img src='"+ajaxCoreBaseUrl+"img/loading.gif'></td><td nowrap>"+text+"</td></tr></table>",40);
     }
 
     processObj.showHtml=function(text,height){
@@ -73,14 +73,21 @@
         document.getElementsByTagName("BODY")[0].appendChild(bgText);
         $(bgText).html(text).css("display","block");
     }
-
-    $( document ).ajaxSend(function() {
-        //console.info("ajaxSend !");
-        processObj.processStart("<nobr>&nbsp;&nbsp;查询中,请稍候...</nobr>");
-    });
-    $(document).ajaxComplete(function(){
-        //console.info("processEnd !");
-        processObj.processEnd();
-    });
-
+    //全局使用会有问题
+    //$( document ).ajaxSend(function() {
+    //    //console.info("ajaxSend !");
+    //    processObj.processStart("<nobr>查询中,请稍候...</nobr>");
+    //});
+    //$(document).ajaxComplete(function(){
+    //    //console.info("processEnd !");
+    //    processObj.processEnd();
+    //});
+    //expose the processObj
+    processObj.start = function(){
+        this.processStart("<nobr>查询中,请稍候...</nobr>");
+    }
+    processObj.end = function(){
+       this.processEnd() ;
+    }
+    window.processObj = processObj ;
 })(jQuery);
