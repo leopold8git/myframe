@@ -7,7 +7,8 @@
  * example:$("#a_yearAmount").combo({url:"",page:,autowidth:false,width:"200px",height:"60px",relativeLeft:-5,relativeTop:5});
  * 将一个现有的div（id 为 a_yearAmount）拼装在 input下面
  *
- *  changed by 20151207 增加分页，返回的json格式改成{"data":[],"page":{"curPage": ,"totalCount": ,"pageSize": "pageNum":}}
+ *  changed at 20151207 增加分页，返回的json格式改成{"data":[],"page":{"curPage": ,"totalCount": ,"pageSize": "pageNum":}}
+ *  changed at 20160201 将ul li 换成div ，解决 overflow auto 时 ， ul li 会一直显示滚动边框
  */
 (function($) {
 
@@ -140,18 +141,18 @@
 					if(!data || data.length<1){
 						return;
 					}
-					var ul = $("<ul></ul>");
-					ul.css({background: 'none repeat scroll 0 0 #f3f9fc',
+					var droplist = $("<div></div>");
+					droplist.css({background: 'none repeat scroll 0 0 #f3f9fc',
 						border: '1px solid #57a8e4',
 						left: '0',
-						overflow : 'scroll',
+						overflow : 'auto',
 						//    position: 'absolute',
 						top: '0px',
 						margin:0,
 						padding:0,
 						width: '100%'});
 
-					var licss = {color: '#333',
+					var dropItemCss = {color: '#333',
 						listStyle: 'outside none none',
 						margin: 0,
 						padding: 0,
@@ -164,37 +165,37 @@
 					var actualH = 0;
 					//添加默认值
 					if(conf.headKey && conf.headValue != undefined){
-						var li = $("<li></li>");
-						li.css(licss);
-						actualH += li.height();
+						var dropItem = $("<div></div>");
+						dropItem.css(dropItemCss);
+						actualH += dropItem.height();
 
-						li.html(conf.headKey);
+						dropItem.html(conf.headKey);
 
-						li.attr("val",conf.headValue);
-						li.mouseover(function(){
+						dropItem.attr("val",conf.headValue);
+						dropItem.mouseover(function(){
 							$(this).css("background","none repeat scroll 0 0 #57a8e4");
 						});
-						li.mouseout(function(){
+						dropItem.mouseout(function(){
 							$(this).css("background","none repeat scroll 0 0 #f3f9fc");
 						});
-						li.click(function(){
+						dropItem.click(function(){
 							elem.val($(this).html());
 							elem.attr("val",$(this).attr("val"));
 							if(self.valueInput){
 								self.valueInput.val($(this).attr("val"));
 							}
 						});
-						ul.append(li);
+						droplist.append(dropItem);
 					}
 
 					if(data){
 						for(var i=0;i<data.length;i++){
-							var li = $("<li></li>");
-							li.css(licss);
-							actualH += li.height();
+							var dropItem = $("<div></div>");
+							dropItem.css(dropItemCss);
+							actualH += dropItem.height();
 							var j = data[i];
-							li.html(j[conf.optionField||'text']);
-							li.attr("val",j[conf.valueField||'value']); // 这里不要使用li.attr("value",xxx) , value 是元素固有的属性，当xxx为空时，如果是value，则li.attr("value") 会等于0
+							dropItem.html(j[conf.optionField||'text']);
+							dropItem.attr("val",j[conf.valueField||'value']); // 这里不要使用li.attr("value",xxx) , value 是元素固有的属性，当xxx为空时，如果是value，则li.attr("value") 会等于0
 							//选中 指定selectedValue 项
 							var sv = elem.attr("selectedValue") ;
 							if( sv && sv == j[conf.valueField||'value']){
@@ -203,56 +204,56 @@
 									self.valueInput.val(sv);
 								}
 							}
-							li.mouseover(function(){
+							dropItem.mouseover(function(){
 								$(this).css("background","none repeat scroll 0 0 #57a8e4");
 							});
-							li.mouseout(function(){
+							dropItem.mouseout(function(){
 								$(this).css("background","none repeat scroll 0 0 #f3f9fc");
 							});
-							li.click(function(){
+							dropItem.click(function(){
 								elem.val($(this).html());
 								elem.attr("val",$(this).attr("val"));
 								if(self.valueInput){
 									self.valueInput.val($(this).attr("val"));
 								}
 							});
-							ul.append(li);
+							droplist.append(dropItem);
 						}
 						//分页信息 page : {curPage: '1', pageSize:'10'}
 						if (conf.page) {
-							var pageLi = $("<li id='combo_page' style='font-size:13px;'></li>");
-							pageLi.css(licss);
-							pageLi.find("a").css({"text-decoration":"none"});
+							var pageItem = $("<div id='combo_page' style='font-size:13px;'></div>");
+							pageItem.css(dropItemCss);
+							pageItem.find("a").css({"text-decoration":"none"});
 
 
 							var lastPageSpan = "<a href='javascript:void(0)' id='combo_last' style='color:blue;'>上一页 </a> ";
 							var nextPageSpan = "<a href='javascript:void(0)' id='combo_next' style='color:blue;'>下一页</a>";
 							if (conf.page.curPage>1) {
-								pageLi.append(lastPageSpan);
-								pageLi.find("#combo_last").click(function(e){
+								pageItem.append(lastPageSpan);
+								pageItem.find("#combo_last").click(function(e){
 									e.stopPropagation();
 									conf.page.curPage = parseInt(conf.page.curPage) -1 ;
 									self.reloadUrl();
 								});
 							}
 							if (conf.page.curPage<conf.page.pageNum) {
-								pageLi.append(nextPageSpan);
-								pageLi.find("#combo_next").click(function(e){
+								pageItem.append(nextPageSpan);
+								pageItem.find("#combo_next").click(function(e){
 									e.stopPropagation();
 									conf.page.curPage = parseInt(conf.page.curPage) +1 ;
 									self.reloadUrl();
 								});
 							}
 							if(conf.page.curPage >1 ||  conf.page.curPage<conf.page.pageNum){
-								ul.append(pageLi);
-								actualH += pageLi.height();
+								droplist.append(pageItem);
+								actualH += pageItem.height();
 							}
 						}
 
 					}
 					var boxId = "_combobox_"+new Date().getTime();
-					ul.attr("id",boxId);
-					this.getPopDiv().append(ul);
+					droplist.attr("id",boxId);
+					this.getPopDiv().append(droplist);
 					var maxH = conf.maxHeight || 150;
 					/*if(actualH<=maxH){
 						ul.height(actualH);
@@ -261,8 +262,8 @@
 						ul.height(maxH);
 					}*/
 					if(actualH>maxH){
-						ul.height(maxH);
-						ul.css("overflow","scroll");
+						droplist.height(maxH);
+						droplist.css("overflow","scroll");
 					}
 				},
 				getData : function(){
