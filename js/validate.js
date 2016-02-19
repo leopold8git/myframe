@@ -1,8 +1,8 @@
 var focusObj = null;
-var validate_tipsClass_failed="validatTips_failure";//Ê§°ÜÌáÊ¾µÄÑùÊ½Ãû
-var validate_tipsClass_success="validatTips_success";//³É¹¦ÌáÊ¾µÄÑùÊ½Ãû
-var Validate_inputClass_failed="input_validation_failed";//ÑéÖ¤Ê§°ÜµÄÊäÈë¿òÑùÊ½Ãû
-var Validate_inputClass_failed="input_validation_failed";//ÑéÖ¤Ê§°ÜµÄÊäÈë¿òÑùÊ½Ãû
+var validate_tipsClass_failed="validatTips_failure";//Ê§ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½
+var validate_tipsClass_success="validatTips_success";//ï¿½É¹ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½
+var Validate_inputClass_failed="input_validation_failed";//ï¿½ï¿½Ö¤Ê§ï¿½Üµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½
+var Validate_inputClass_failed="input_validation_failed";//ï¿½ï¿½Ö¤Ê§ï¿½Üµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½
 $(function(){
 	var xOffset = -5; // x distance from mouse
     var yOffset = 5; // y distance from mouse  
@@ -143,10 +143,10 @@ function validateForm(obj){
 function commonValidate(obj){
 	var objValue = $.trim(obj.attr("value"));
 	regText=obj.attr("reg")
-	var maxLength=0; //×î´ó×Ö·ûÊý
-	var minLength=0; //×îÐ¡×Ö·ûÊý
-	var allowNull = false;	//ÊäÈë¿òÔÊÐíÎª¿ÕÖµ
-	var minNumber = false;	//Èç¹ûÊÇÊý×Ö×îÐ¡Öµ ²»°üº¬×îÐ¡
+	var maxLength=0; //ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
+	var minLength=0; //ï¿½ï¿½Ð¡ï¿½Ö·ï¿½ï¿½ï¿½
+	var allowNull = false;	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Öµ
+	var minNumber = false;	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡Öµ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡
 	if(obj.attr("maxValLength")){
 		maxLength = parseInt(obj.attr("maxValLength"));
 	}
@@ -168,9 +168,21 @@ function commonValidate(obj){
 		case "positiveNumber" :
 			regChar=/^[1-9][0-9]*$/;
 		break;
-		case "Float" :
-			regChar=/^[0-9]+\.?[0-9]*$/;
+		case "positiveFloat" :
+			regChar=/^([1-9]\d*)(\.\d+)?$/;
 		break;
+		case "negativeFloat" :
+			regChar=/^-([1-9]\d*)(\.\d+)?$/;
+			break;
+		case "positiveFloatOrZero" :
+			regChar=/^(0|[1-9]\d*)(\.\d+)?$/;
+			break;
+		case "negativeFloatOrZero" :
+			regChar=/^-(0|[1-9]\d*)(\.\d+)?$/;
+			break;
+		case "Float" :
+			regChar=/^-?(0|[1-9]\d*)(\.\d+)?$/;
+			break;
 		case "Email" :
 			regChar=/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
 		break;
@@ -204,7 +216,7 @@ function commonValidate(obj){
 		case "isPhone":
 			  regChar=/^((0\d{2,3})-)?(\d{7,8})(-(\d{3,}))?$/;
 		break;
-		case "MapCheck":  //ÌáÊ¾ÅÐ¶ÏµØÍ¼
+		case "MapCheck":  //ï¿½ï¿½Ê¾ï¿½Ð¶Ïµï¿½Í¼
 			  mapValue=objValue;
 			 regChar='';
 		break;
@@ -224,7 +236,7 @@ function commonValidate(obj){
 	var reg = new RegExp(regChar);
 	var isMobile=/^(?:13\d|15\d)\d{5}(\d{3}|\*{3})$/;
 
-	//ÔÊÐíÎª¿ÕÖµ
+	//ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Öµ
 	if((objValue==null || objValue=="") && allowNull == "true"){
 		return true;
 	}
@@ -234,7 +246,7 @@ function commonValidate(obj){
 		change_tip(obj,null,"remove");
 		return false;
 	}else{
-		//ÅÐ¶ÏÊÖ»úºÅÂëºÍ×ù»úºÅÂë
+		//ï¿½Ð¶ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		if(regText == "isPhone" && objValue != ""){
 			if(!reg.test(objValue) && !isMobile.test(objValue)){
 				change_error_style(obj,"add");
@@ -277,6 +289,7 @@ function commonValidate(obj){
 				return false;
 			}
 		}
+		
 		if(obj.attr("ajaxurl") == undefined){
 				change_error_style(obj,"true");
 				change_tip(obj,null,"remove");
@@ -286,34 +299,36 @@ function commonValidate(obj){
 		}
 	}
 }
+
+
 /**  
- * Éí·ÝÖ¤15Î»±àÂë¹æÔò£ºdddddd yymmdd xx p   
- * dddddd£ºµØÇøÂë   
- * yymmdd: ³öÉúÄêÔÂÈÕ   
- * xx: Ë³ÐòÀà±àÂë£¬ÎÞ·¨È·¶¨   
- * p: ÐÔ±ð£¬ÆæÊýÎªÄÐ£¬Å¼ÊýÎªÅ®  
+ * ï¿½ï¿½ï¿½Ö¤15Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½dddddd yymmdd xx p   
+ * ddddddï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½   
+ * yymmdd: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½   
+ * xx: Ë³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë£¬ï¿½Þ·ï¿½È·ï¿½ï¿½   
+ * p: ï¿½Ô±ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½Ð£ï¿½Å¼ï¿½ï¿½ÎªÅ®  
  * <p />  
- * Éí·ÝÖ¤18Î»±àÂë¹æÔò£ºdddddd yyyymmdd xxx y   
- * dddddd£ºµØÇøÂë   
- * yyyymmdd: ³öÉúÄêÔÂÈÕ   
- * xxx:Ë³ÐòÀà±àÂë£¬ÎÞ·¨È·¶¨£¬ÆæÊýÎªÄÐ£¬Å¼ÊýÎªÅ®   
- * y: Ð£ÑéÂë£¬¸ÃÎ»ÊýÖµ¿ÉÍ¨¹ýÇ°17Î»¼ÆËã»ñµÃ  
+ * ï¿½ï¿½ï¿½Ö¤18Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½dddddd yyyymmdd xxx y   
+ * ddddddï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½   
+ * yyyymmdd: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½   
+ * xxx:Ë³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë£¬ï¿½Þ·ï¿½È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½Ð£ï¿½Å¼ï¿½ï¿½ÎªÅ®   
+ * y: Ð£ï¿½ï¿½ï¿½ë£¬ï¿½ï¿½Î»ï¿½ï¿½Öµï¿½ï¿½Í¨ï¿½ï¿½Ç°17Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
  * <p />  
- * 18Î»ºÅÂë¼ÓÈ¨Òò×ÓÎª(´ÓÓÒµ½×ó) Wi = [ 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2,1 ]  
- * ÑéÖ¤Î» Y = [ 1, 0, 10, 9, 8, 7, 6, 5, 4, 3, 2 ]   
- * Ð£ÑéÎ»¼ÆËã¹«Ê½£ºY_P = mod( ¡Æ(Ai¡ÁWi),11 )   
- * iÎªÉí·ÝÖ¤ºÅÂë´ÓÓÒÍù×óÊýµÄ 2...18 Î»; Y_PÎª½ÅÑ¾Ð£ÑéÂëËùÔÚÐ£ÑéÂëÊý×éÎ»ÖÃ  
+ * 18Î»ï¿½ï¿½ï¿½ï¿½ï¿½È¨ï¿½ï¿½ï¿½ï¿½Îª(ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½) Wi = [ 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2,1 ]  
+ * ï¿½ï¿½Ö¤Î» Y = [ 1, 0, 10, 9, 8, 7, 6, 5, 4, 3, 2 ]   
+ * Ð£ï¿½ï¿½Î»ï¿½ï¿½ï¿½ã¹«Ê½ï¿½ï¿½Y_P = mod( ï¿½ï¿½(Aiï¿½ï¿½Wi),11 )   
+ * iÎªï¿½ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 2...18 Î»; Y_PÎªï¿½ï¿½Ñ¾Ð£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½  
  *   
  */  
   
-var Wi = [ 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2, 1 ];// ¼ÓÈ¨Òò×Ó   
-var ValideCode = [ 1, 0, 10, 9, 8, 7, 6, 5, 4, 3, 2 ];// Éí·ÝÖ¤ÑéÖ¤Î»Öµ.10´ú±íX   
+var Wi = [ 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2, 1 ];// ï¿½ï¿½È¨ï¿½ï¿½ï¿½ï¿½   
+var ValideCode = [ 1, 0, 10, 9, 8, 7, 6, 5, 4, 3, 2 ];// ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½Ö¤Î»Öµ.10ï¿½ï¿½ï¿½ï¿½X   
 function IdCardValidate(idCard) {   
     idCard = trim(idCard.replace(/ /g, ""));   
     if (idCard.length == 15) {   
         return isValidityBrithBy15IdCard(idCard);   
     } else if (idCard.length == 18) {   
-        var a_idCard = idCard.split("");// µÃµ½Éí·ÝÖ¤Êý×é   
+        var a_idCard = idCard.split("");// ï¿½Ãµï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½   
         if(isValidityBrithBy18IdCard(idCard)&&isTrueValidateCodeBy18IdCard(a_idCard)){   
             return true;   
         }else {   
@@ -324,19 +339,19 @@ function IdCardValidate(idCard) {
     }   
 }   
 /**  
- * ÅÐ¶ÏÉí·ÝÖ¤ºÅÂëÎª18Î»Ê±×îºóµÄÑéÖ¤Î»ÊÇ·ñÕýÈ·  
- * @param a_idCard Éí·ÝÖ¤ºÅÂëÊý×é  
+ * ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½Îª18Î»Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤Î»ï¿½Ç·ï¿½ï¿½ï¿½È·  
+ * @param a_idCard ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
  * @return  
  */  
 function isTrueValidateCodeBy18IdCard(a_idCard) {   
-    var sum = 0; // ÉùÃ÷¼ÓÈ¨ÇóºÍ±äÁ¿   
+    var sum = 0; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¨ï¿½ï¿½Í±ï¿½ï¿½ï¿½   
     if (a_idCard[17].toLowerCase() == 'x') {   
-        a_idCard[17] = 10;// ½«×îºóÎ»ÎªxµÄÑéÖ¤ÂëÌæ»»Îª10·½±ãºóÐø²Ù×÷   
+        a_idCard[17] = 10;// ï¿½ï¿½ï¿½ï¿½ï¿½Î»Îªxï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½æ»»Îª10ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½   
     }   
     for ( var i = 0; i < 17; i++) {   
-        sum += Wi[i] * a_idCard[i];// ¼ÓÈ¨ÇóºÍ   
+        sum += Wi[i] * a_idCard[i];// ï¿½ï¿½È¨ï¿½ï¿½ï¿½   
     }   
-    valCodePosition = sum % 11;// µÃµ½ÑéÖ¤ÂëËùÎ»ÖÃ   
+    valCodePosition = sum % 11;// ï¿½Ãµï¿½ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½   
     if (a_idCard[17] == ValideCode[valCodePosition]) {   
         return true;   
     } else {   
@@ -344,12 +359,12 @@ function isTrueValidateCodeBy18IdCard(a_idCard) {
     }   
 }   
 /**  
- * Í¨¹ýÉí·ÝÖ¤ÅÐ¶ÏÊÇÄÐÊÇÅ®  
- * @param idCard 15/18Î»Éí·ÝÖ¤ºÅÂë   
- * @return 'female'-Å®¡¢'male'-ÄÐ  
+ * Í¨ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å®  
+ * @param idCard 15/18Î»ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½   
+ * @return 'female'-Å®ï¿½ï¿½'male'-ï¿½ï¿½  
  */  
 function maleOrFemalByIdCard(idCard){   
-    idCard = trim(idCard.replace(/ /g, ""));// ¶ÔÉí·ÝÖ¤ºÅÂë×ö´¦Àí¡£°üÀ¨×Ö·û¼äÓÐ¿Õ¸ñ¡£   
+    idCard = trim(idCard.replace(/ /g, ""));// ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½Ð¿Õ¸ï¿½   
     if(idCard.length==15){   
         if(idCard.substring(14,15)%2==0){   
             return 'female';   
@@ -368,8 +383,8 @@ function maleOrFemalByIdCard(idCard){
 
 }   
  /**  
-  * ÑéÖ¤18Î»ÊýÉí·ÝÖ¤ºÅÂëÖÐµÄÉúÈÕÊÇ·ñÊÇÓÐÐ§ÉúÈÕ  
-  * @param idCard 18Î»ÊéÉí·ÝÖ¤×Ö·û´®  
+  * ï¿½ï¿½Ö¤18Î»ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½ï¿½ï¿½  
+  * @param idCard 18Î»ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½Ö·ï¿½ï¿½ï¿½  
   * @return  
   */  
 function isValidityBrithBy18IdCard(idCard18){   
@@ -377,7 +392,7 @@ function isValidityBrithBy18IdCard(idCard18){
     var month = idCard18.substring(10,12);   
     var day = idCard18.substring(12,14);   
     var temp_date = new Date(year,parseFloat(month)-1,parseFloat(day));   
-    // ÕâÀïÓÃgetFullYear()»ñÈ¡Äê·Ý£¬±ÜÃâÇ§Äê³æÎÊÌâ   
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½getFullYear()ï¿½ï¿½È¡ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½ï¿½Ç§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½   
     if(temp_date.getFullYear()!=parseFloat(year)   
           ||temp_date.getMonth()!=parseFloat(month)-1   
           ||temp_date.getDate()!=parseFloat(day)){   
@@ -387,8 +402,8 @@ function isValidityBrithBy18IdCard(idCard18){
     }   
 }   
   /**  
-   * ÑéÖ¤15Î»ÊýÉí·ÝÖ¤ºÅÂëÖÐµÄÉúÈÕÊÇ·ñÊÇÓÐÐ§ÉúÈÕ  
-   * @param idCard15 15Î»ÊéÉí·ÝÖ¤×Ö·û´®  
+   * ï¿½ï¿½Ö¤15Î»ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½ï¿½ï¿½  
+   * @param idCard15 15Î»ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½Ö·ï¿½ï¿½ï¿½  
    * @return  
    */  
   function isValidityBrithBy15IdCard(idCard15){   
@@ -396,7 +411,7 @@ function isValidityBrithBy18IdCard(idCard18){
       var month = idCard15.substring(8,10);   
       var day = idCard15.substring(10,12);   
       var temp_date = new Date(year,parseFloat(month)-1,parseFloat(day));   
-      // ¶ÔÓÚÀÏÉí·ÝÖ¤ÖÐµÄÄãÄêÁäÔò²»Ðè¿¼ÂÇÇ§Äê³æÎÊÌâ¶øÊ¹ÓÃgetYear()·½·¨   
+      // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è¿¼ï¿½ï¿½Ç§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½getYear()ï¿½ï¿½ï¿½ï¿½   
       if(temp_date.getYear()!=parseFloat(year)   
               ||temp_date.getMonth()!=parseFloat(month)-1   
               ||temp_date.getDate()!=parseFloat(day)){   
@@ -405,7 +420,7 @@ function isValidityBrithBy18IdCard(idCard18){
             return true;   
         }   
   }   
-//È¥µô×Ö·û´®Í·Î²¿Õ¸ñ   
+//È¥ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½Í·Î²ï¿½Õ¸ï¿½   
 function trim(str) {   
     return str.replace(/(^\s*)|(\s*$)/g, "");   
 } 
@@ -441,12 +456,12 @@ function ajax_validate(obj){
 
 
 function change_tip(obj,msg,action_type){
-	 //Èç¹ûµ±Ç°ÔªËØÊÇÒþ²ØµÄÔò²»ÏÔÊ¾´íÎóÐÅÏ¢
+	 //ï¿½ï¿½ï¿½ï¿½ï¿½Ç°Ôªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
     if($(obj).is(":hidden")){
 		return;
     }
     
-	if(obj.attr("tip") == undefined){//³õÊ¼»¯ÅÐ¶ÏTIPÊÇ·ñÎª¿Õ
+	if(obj.attr("tip") == undefined){//ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Ð¶ï¿½TIPï¿½Ç·ï¿½Îªï¿½ï¿½
 		obj.attr("is_tip_null","yes");
 	}
 	if(action_type == "add"){
@@ -472,7 +487,7 @@ function change_tip(obj,msg,action_type){
 }
 
 function ChangeTips(obj,type,msg){
-     //Èç¹ûµ±Ç°ÔªËØÊÇÒþ²ØµÄÔò²»ÏÔÊ¾´íÎóÐÅÏ¢
+     //ï¿½ï¿½ï¿½ï¿½ï¿½Ç°Ôªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
     if($(obj).is(":hidden")){
 		return;
     }
@@ -500,8 +515,8 @@ function ChangeTips(obj,type,msg){
 	    obj.attr("falseTips",falseTips);	
     }
 	
-	//var tureTipsId="vTip_true_"+tId;//ÌáÊ¾ÕýÈ·µÄ¶ÔÏóID
-	//var falseTips="vTip_false_"+tId;//ÌáÊ¾´íÎóµÄ¶ÔÏóID
+	//var tureTipsId="vTip_true_"+tId;//ï¿½ï¿½Ê¾ï¿½ï¿½È·ï¿½Ä¶ï¿½ï¿½ï¿½ID
+	//var falseTips="vTip_false_"+tId;//ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ID
 	
 	var tipText ;
 	if(msg){
@@ -540,7 +555,7 @@ function ChangeTips(obj,type,msg){
 }
  
 function showTipsExplain(obj,type){
-    //Èç¹ûµ±Ç°ÔªËØÊÇÒþ²ØµÄÔò²»ÏÔÊ¾´íÎóÐÅÏ¢
+    //ï¿½ï¿½ï¿½ï¿½ï¿½Ç°Ôªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
     if($(obj).is(":hidden")){
 		return;
     }
@@ -554,8 +569,8 @@ function showTipsExplain(obj,type){
 	var tid=$(obj).attr("id");
 	var expTid="validatTips_exp_"+tid;
 	var expContent=$(obj).attr("explain")
-	var tureTipsId="vTip_true_"+tid;//ÌáÊ¾ÕýÈ·µÄ¶ÔÏóID
-	var falseTips="vTip_false_"+tid;//ÌáÊ¾´íÎóµÄ¶ÔÏóID
+	var tureTipsId="vTip_true_"+tid;//ï¿½ï¿½Ê¾ï¿½ï¿½È·ï¿½Ä¶ï¿½ï¿½ï¿½ID
+	var falseTips="vTip_false_"+tid;//ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ID
 	if($(obj).attr("explain") != undefined){
 		if(type=="show"){
 			if($("#"+expTid).length < 1 ){
@@ -592,10 +607,10 @@ function resetValidate(formObj){
 	
 }
 
-/*ÓÃÓÚ¶¯´´½¨ÑéÖ¤ÌáÊ¾ÐÅÏ¢,
-obj£ºÑéÖ¤µÄÊäÈë¿ò¶ÔÏó
-action_type: "add" ´´½¨£¬"remove" ÒÆ³ý
-msg:ÌáÊ¾ÐÅÏ¢
+/*ï¿½ï¿½ï¿½Ú¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½Ê¾ï¿½ï¿½Ï¢,
+objï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+action_type: "add" ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"remove" ï¿½Æ³ï¿½
+msg:ï¿½ï¿½Ê¾ï¿½ï¿½Ï¢
 */
 function change_error_style(obj,action_type,msg){
 	if(action_type == "add"){
@@ -615,8 +630,8 @@ function change_error_style(obj,action_type,msg){
 
 function hideTips(obj){
 	var tId=obj.attr("id");
-	var tureTipsId="vTip_true_"+tId;//ÌáÊ¾ÕýÈ·µÄ¶ÔÏóID
-	var falseTips="vTip_false_"+tId;//ÌáÊ¾´íÎóµÄ¶ÔÏóID
+	var tureTipsId="vTip_true_"+tId;//ï¿½ï¿½Ê¾ï¿½ï¿½È·ï¿½Ä¶ï¿½ï¿½ï¿½ID
+	var falseTips="vTip_false_"+tId;//ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ID
 	$('#'+tureTipsId).hide();
 	$('#'+falseTips).hide();
 }
