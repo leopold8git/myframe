@@ -1,8 +1,7 @@
 var focusObj = null;
-var validate_tipsClass_failed="validatTips_failure";//ʧ����ʾ����ʽ��
-var validate_tipsClass_success="validatTips_success";//�ɹ���ʾ����ʽ��
-var Validate_inputClass_failed="input_validation_failed";//��֤ʧ�ܵ��������ʽ��
-var Validate_inputClass_failed="input_validation_failed";//��֤ʧ�ܵ��������ʽ��
+var validate_tipsClass_failed="validatTips_failure";//校验失败css类
+var validate_tipsClass_success="validatTips_success";//校验成功css类
+var Validate_inputClass_failed="input_validation_failed";//文本框校验失败
 $(function(){
 	var xOffset = -5; // x distance from mouse
     var yOffset = 5; // y distance from mouse  
@@ -38,80 +37,9 @@ function validateBefore(thisObj){
     }
 }
 
-function initValidateForm(){
-	var xOffset = -5; // x distance from mouse
-    var yOffset = 5; // y distance from mouse  
-
-	$("[reg],[ajaxurl]:not([reg]),[tip]").live("blur",function(){
-		focusObj = null;
-	    validate(this);
-	    showTipsExplain(this,"hide");
-	}).live("focus",function(){
-		$(this).removeClass(Validate_inputClass_failed);
-		focusObj = this;
-		 showTipsExplain(this,"show");
-
-	}).change(function(){
-	    validate(this);
-	});
-	
-	$("form").submit(function(){
-	    return validateForm(this);
-	});
-}
-
-
 function validate(target){
     if($(target).attr("skipValidate"))return;
-    if($(target).attr("check") != undefined){
-        diyValidate($(target).attr("check"),$(target));
-    }else if($(target).attr("reg") == "CheckboxMenu"){
-        checkboxMenuValidate($(target));
-    }else if($(target).attr("reg") == "MultipleEnter"){
-        multipleEnterValidate($(target));
-    }else if($(target).attr("reg") != undefined){
-        commonValidate($(target));
-    }
-}
-
-function checkboxMenuValidate(target){
-    var isValid = false;
-    var menu = Qfang.MenuManager.getMenu(target.attr("id"));
-    if (menu) {
-        var result = menu.getValue();
-        if (result && result.length >= 1) {
-            isValid = true;
-        }
-    }
-    return setStyle(isValid,target);
-}
-
-function multipleEnterValidate(target){
-    var isValid = false;
-    var multipleEnter = qfang.multiple.Manager.getMultipleEnter(target.find("input").attr("id"));
-    if (multipleEnter) {
-        var result = multipleEnter.getValue();
-        if (result && result.length >= 1) {
-            isValid = true;
-        }
-    }
-    return setStyle(isValid,target);
-}
-
-function diyValidate(cb,target){
-    return setStyle(eval(cb+"(target)"),target);
-}
-
-function setStyle(isValid,target){
-    if(isValid){
-        change_error_style(target,"remove");
-        change_tip(target,null,"remove");
-        return isValid;
-    }else{
-        change_error_style(target,"add");
-        change_tip(target,null,"remove");
-        return isValid;
-    }
+	commonValidate($(target));
 }
 
 function validateForm(obj){
@@ -142,11 +70,11 @@ function validateForm(obj){
 
 function commonValidate(obj){
 	var objValue = $.trim(obj.attr("value"));
-	regText=obj.attr("reg")
-	var maxLength=0; //����ַ���
-	var minLength=0; //��С�ַ���
-	var allowNull = false;	//���������Ϊ��ֵ
-	var minNumber = false;	//�����������Сֵ ��������С
+	var regStr=obj.attr("reg");
+	var maxLength=0;
+	var minLength=0;
+	var allowNull = false;	//允许为空
+	var minNumber = false;
 	if(obj.attr("maxValLength")){
 		maxLength = parseInt(obj.attr("maxValLength"));
 	}
@@ -159,143 +87,208 @@ function commonValidate(obj){
 	if(obj.attr("allowNull")){
 		allowNull = obj.attr("allowNull");
 	}
-	
-	var mapValue="0,0";
- 	switch(regText){
-		case "number" :
-			regChar=/^-?[0-9]*$/;
-		break;
-		case "positiveNumber" :
-			regChar=/^[1-9][0-9]*$/;
-		break;
-		case "positiveFloat" :
-			regChar=/^([1-9]\d*)(\.\d+)?$/;
-		break;
-		case "negativeFloat" :
-			regChar=/^-([1-9]\d*)(\.\d+)?$/;
-			break;
-		case "positiveFloatOrZero" :
-			regChar=/^(0|[1-9]\d*)(\.\d+)?$/;
-			break;
-		case "negativeFloatOrZero" :
-			regChar=/^-(0|[1-9]\d*)(\.\d+)?$/;
-			break;
-		case "Float" :
-			regChar=/^-?(0|[1-9]\d*)(\.\d+)?$/;
-			break;
-		case "Email" :
-			regChar=/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
-		break;
-		case "Chinese":
-			regChar=/^[\u4e00-\u9fa5]+$/;	
-		break;
-		case "Phone":
-			regChar=/^(0[0-9]{2,3}\-)?([2-9][0-9]{6,7})+(\-[0-9]{1,4})?$/;
-		break;
-		case "Required":
-			regChar=/.+/;	
-		break;
-		case "IdCard":
-			regChar=/\d{15}|\d{18}/;
-		break;
-		case "Password":
-			regChar=/\S{6,}/;
-		break;
-		case "Mobile":
-			regChar=/^[1][3458]\d{9}$/;
-		break;
-		case "GlobalMobile":
-			regChar=/^(([1][3458]\d{9})||([569]\d{7}))$/;
-		break;
-		case "ContactPhone" :
-			  regChar=/^[0-9]{11,14}$/;
-		break;
-		case "JobNumber" :
-			regChar=/^[0-9]{4,10}$/;
-		break;	
-		case "isPhone":
-			  regChar=/^((0\d{2,3})-)?(\d{7,8})(-(\d{3,}))?$/;
-		break;
-		case "MapCheck":  //��ʾ�жϵ�ͼ
-			  mapValue=objValue;
-			 regChar='';
-		break;
-		case "OnlyLength":
-			 regChar='';
-		break;
-		case "NoSign":
-			 regChar='^[^<>]*$';
-		break;
-		case "ChEnNumber":
-			 regChar=/^(\w|[\u4E00-\u9FA5])*$/;
-			 break;
-		default:
-		;
-	}
-	// alert(regText)
-	var reg = new RegExp(regChar);
-	var isMobile=/^(?:13\d|15\d)\d{5}(\d{3}|\*{3})$/;
+	if(regStr != null && regStr != undefined ){
+		var regArr =  regStr.split("|");
+		for(var regTextIndex in regArr){
+			var regText = regArr[regTextIndex];
+			var regChar = "";
+			switch(regText){
+				case "number" :
+					regChar=/^-?[0-9]*$/;
+					break;
+				case "positiveNumber" :
+					regChar=/^[1-9][0-9]*$/;
+					break;
+				case "positiveFloat" :
+					regChar=/^([1-9]\d*)(\.\d+)?$/;
+					break;
+				case "positiveFloatPrecision2" :
+					regChar=/^([1-9]\d*)(\.\d{1,2})?$/;
+					break;
+				case "negativeFloat" :
+					regChar=/^-([1-9]\d*)(\.\d+)?$/;
+					break;
+				case "negativeFloatPrecision2" :
+					regChar=/^-([1-9]\d*)(\.\d{1,2})?$/;
+					break;
+				case "positiveFloatOrZero" :
+					regChar=/^(0|[1-9]\d*)(\.\d+)?$/;
+					break;
+				case "positiveFloatOrZeroPrecision2" :
+					regChar=/^(0|[1-9]\d*)(\.\d{1,2})?$/;
+					break;
+				case "negativeFloatOrZero" :
+					regChar=/^(0|-[1-9]\d*)(\.\d+)?$/;
+					break;
+				case "negativeFloatOrZeroPrecision2" :
+					regChar=/^(0|-[1-9]\d*)(\.\d{1,2})?$/;
+					break;
+				case "Float" :
+					regChar=/^-?(0|[1-9]\d*)(\.\d+)?$/;
+					break;
+				case "Email" :
+					regChar=/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+					break;
+				case "Chinese":
+					regChar=/^[\u4e00-\u9fa5]+$/;
+					break;
+				case "Phone":
+					regChar=/^(0[0-9]{2,3}\-)?([2-9][0-9]{6,7})+(\-[0-9]{1,4})?$/;
+					break;
+				case "Required":
+					regChar=/.+/;
+					break;
+				case "IdCard":
+					regChar=/\d{15}|\d{18}/;
+					break;
+				case "Password":
+					regChar=/\S{6,}/;
+					break;
+				case "Mobile":
+					regChar=/^[1][3458]\d{9}$/;
+					break;
+				case "GlobalMobile":
+					regChar=/^(([1][3458]\d{9})||([569]\d{7}))$/;
+					break;
+				case "ContactPhone" :
+					regChar=/^[0-9]{11,14}$/;
+					break;
 
-	//����Ϊ��ֵ
-	if((objValue==null || objValue=="") && allowNull == "true"){
-		return true;
-	}
-
-	if((objValue==null || objValue=="") && allowNull == false){
-		change_error_style(obj,"add");
-		change_tip(obj,null,"remove");
-		return false;
-	}else{
-		//�ж��ֻ��������������
-		if(regText == "isPhone" && objValue != ""){
-			if(!reg.test(objValue) && !isMobile.test(objValue)){
-				change_error_style(obj,"add");
-				change_tip(obj,null,"remove");
-				return false;	
+				case "isPhone":
+					regChar=/^((0\d{2,3})-)?(\d{7,8})(-(\d{3,}))?$/;
+					break;
+				case "NoSign":
+					regChar='^[^<>]*$';
+					break;
+				case "ChEnNumber":
+					regChar=/^(\w|[\u4E00-\u9FA5])*$/;
+					break;
+				default:
+					;
 			}
-		}else if(regText=="IdCard"){
-			if(!IdCardValidate(objValue)){
+			// alert(regText)
+			var reg = new RegExp(regChar);
+			var isMobile=/^(?:13\d|15\d)\d{5}(\d{3}|\*{3})$/;
+
+			if((objValue==null || objValue=="") && allowNull == "true"){
+				return true;
+			}
+
+			if((objValue==null || objValue=="") && allowNull == false){
 				change_error_style(obj,"add");
 				change_tip(obj,null,"remove");
 				return false;
-			}
-		}else{
-			if(regChar && objValue){
-				if(!reg.test(objValue)){
-					change_error_style(obj,"add");
-					change_tip(obj,null,"remove");
-					return false;
-				}
 			}else{
-				if(regText =="MapCheck" &&  mapValue == "0,0"){
-					change_error_style(obj,"add");
-					change_tip(obj,null,"remove");
-					return false;
+				var regFunc = isRegFunc(regText);
+				if(regText == "isPhone" && objValue != ""){
+					if(!reg.test(objValue) && !isMobile.test(objValue)){
+						change_error_style(obj,"add");
+						change_tip(obj,null,"remove");
+						return false;
+					}
+				}else if(regText=="IdCard"){
+					if(!IdCardValidate(objValue)){
+						change_error_style(obj,"add");
+						change_tip(obj,null,"remove");
+						return false;
+					}
+				}else if(regText != undefined && regText != ''&&  regFunc ) {
+						var paramstr = regText.substring(regText.indexOf('(')+1,regText.indexOf(')'));
+						var paramarr = paramstr.split(",");
+						if(!regFunc(obj, $.trim(paramarr[0]), $.trim(paramarr[1]))){
+							return false;
+						}
+				}else{
+					if(regChar && objValue){
+						if(!reg.test(objValue)){
+							change_error_style(obj,"add");
+							change_tip(obj,null,"remove");
+							return false;
+						}
+					}
+					if(maxLength > 0 && objValue.length > maxLength){
+						change_error_style(obj,"add");
+						change_tip(obj,null,"remove");
+						return false;
+					}
+					if(minLength > 0 && objValue.length < minLength){
+						change_error_style(obj,"add");
+						change_tip(obj,null,"remove");
+						return false;
+					}
+					if(minNumber!==false&&minNumber>=parseFloat(objValue)){
+						change_error_style(obj,"add");
+						change_tip(obj,null,"remove");
+						return false;
+					}
 				}
-			}
-			if(maxLength > 0 && objValue.length > maxLength){
-				change_error_style(obj,"add");
-				change_tip(obj,null,"remove");
-				return false;
-			}
-			if(minLength > 0 && objValue.length < minLength){
-				change_error_style(obj,"add");
-				change_tip(obj,null,"remove");
-				return false;
-			}
-			if(minNumber!==false&&minNumber>=parseFloat(objValue)){
-			    change_error_style(obj,"add");
-				change_tip(obj,null,"remove");
-				return false;
+
+				if(obj.attr("ajaxurl") == undefined){
+					change_error_style(obj,"true");
+					change_tip(obj,null,"remove");
+				}else{
+					return ajax_validate(obj);
+				}
 			}
 		}
-		
-		if(obj.attr("ajaxurl") == undefined){
-				change_error_style(obj,"true");
-				change_tip(obj,null,"remove");
-				return true;
-		}else{
-			return ajax_validate(obj);
+		return true; ;
+	}
+
+
+}
+
+
+
+var lt = function lessThan(obj,compareObjId,msg){
+		var v1 = $(obj).val();
+		var v2 = $("#"+compareObjId).val() ;
+		if(v2 != '' && parseFloat(v1)>parseFloat(v2)){
+			change_error_style(obj,"add");
+			change_tip(obj,msg,"add");
+			return false;
+		}
+		return true;
+	}
+var ltoe = function lessThanOrEquals(obj,compareObjId,msg){
+	var v1 = $(obj).val();
+	var v2 = $("#"+compareObjId).val() ;
+	if(v2 != '' && parseFloat(v1)>=parseFloat(v2)){
+		change_error_style(obj,"add");
+		change_tip(obj,msg,"add");
+		return false;
+	}
+	return true;
+}
+
+var mt = function moreThan(obj,compareObjId,msg){
+	var v1 = $(obj).val();
+	var v2 = $("#"+compareObjId).val() ;
+	if(v2 != '' && parseFloat(v1)<parseFloat(v2)){
+		change_error_style(obj,"add");
+		change_tip(obj,msg,"add");
+		return false;
+	}
+	return true;
+}
+var mtoe = function moreThan(obj,compareObjId,msg){
+	var v1 = $(obj).val();
+	var v2 = $("#"+compareObjId).val() ;
+	if(v2 != '' && parseFloat(v1)<=parseFloat(v2)){
+		change_error_style(obj,"add");
+		change_tip(obj,msg,"add");
+		return false;
+	}
+	return true;
+}
+
+function isRegFunc(s){
+	var funcarr = ["lessThan","lessThanOrEquals","moreThan","moreThanOrEquals"];
+	var funcs = [lt,ltoe,mt,mtoe];
+	if(s != null && s != undefined){
+		for(var i=0;i<funcarr.length;i++){
+			if(s.indexOf(funcarr[i]) == 0){
+				return funcs[i];
+			}
 		}
 	}
 }
@@ -392,8 +385,7 @@ function isValidityBrithBy18IdCard(idCard18){
     var month = idCard18.substring(10,12);   
     var day = idCard18.substring(12,14);   
     var temp_date = new Date(year,parseFloat(month)-1,parseFloat(day));   
-    // ������getFullYear()��ȡ��ݣ�����ǧ�������   
-    if(temp_date.getFullYear()!=parseFloat(year)   
+    if(temp_date.getFullYear()!=parseFloat(year)
           ||temp_date.getMonth()!=parseFloat(month)-1   
           ||temp_date.getDate()!=parseFloat(day)){   
             return false;   
@@ -456,7 +448,6 @@ function ajax_validate(obj){
 
 
 function change_tip(obj,msg,action_type){
-	 //�����ǰԪ�������ص�����ʾ������Ϣ
     if($(obj).is(":hidden")){
 		return;
     }
@@ -515,9 +506,6 @@ function ChangeTips(obj,type,msg){
 	    obj.attr("falseTips",falseTips);	
     }
 	
-	//var tureTipsId="vTip_true_"+tId;//��ʾ��ȷ�Ķ���ID
-	//var falseTips="vTip_false_"+tId;//��ʾ����Ķ���ID
-	
 	var tipText ;
 	if(msg){
 		tipText = msg;
@@ -555,7 +543,6 @@ function ChangeTips(obj,type,msg){
 }
  
 function showTipsExplain(obj,type){
-    //�����ǰԪ�������ص�����ʾ������Ϣ
     if($(obj).is(":hidden")){
 		return;
     }
@@ -587,25 +574,6 @@ function showTipsExplain(obj,type){
 	}
 }
 
-function resetValidate(formObj){
-	/*$(formObj).find('.'+Validate_inputClass_failed).each(function(){
-		$(this).removeClass(Validate_inputClass_failed);
- 	}) 
- 	$(formObj).find('.'+validate_tipsClass_success).each(function(){
- 		$(this).remove();
- 	})
- 	$(formObj).find('.'+validate_tipsClass_failed).each(function(){
- 		$(this).remove();
- 	})*/
- 	$(formObj).find('[reg],[ajaxurl]:not([reg]),[tip]').each(function(){
-		var tureTipsId=$(this).attr("tureTipsId");
-		var falseTipsId=$(this).attr("falseTips");
-		
-		$("#"+tureTipsId).remove();
-		$("#"+falseTipsId).remove();
- 	})
-	
-}
 
 /*���ڶ�������֤��ʾ��Ϣ,
 obj����֤����������
@@ -628,22 +596,3 @@ function change_error_style(obj,action_type,msg){
 	}
 }
 
-function hideTips(obj){
-	var tId=obj.attr("id");
-	var tureTipsId="vTip_true_"+tId;//��ʾ��ȷ�Ķ���ID
-	var falseTips="vTip_false_"+tId;//��ʾ����Ķ���ID
-	$('#'+tureTipsId).hide();
-	$('#'+falseTips).hide();
-}
-
-$.fn.validate_callback = function(msg,action_type,options){
-	this.each(function(){
-		if(action_type == "failed"){
-			change_error_style($(this),"add");
-			change_tip($(this),msg,"add");
-		}else{
-			change_error_style($(this),"remove");
-			change_tip($(this),null,"remove");
-		}
-	});
-};
