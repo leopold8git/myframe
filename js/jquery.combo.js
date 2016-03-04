@@ -203,6 +203,13 @@
 								if(self.valueInput){
 									self.valueInput.val(sv);
 								}
+							}else{//到headValue中找
+								if(sv && conf.headKey && conf.headValue != undefined && sv == conf.headValue){
+									elem.val(conf.headKey);
+									if(self.valueInput){
+										self.valueInput.val(sv);
+									}
+								}
 							}
 							dropItem.mouseover(function(){
 								$(this).css("background","none repeat scroll 0 0 #57a8e4");
